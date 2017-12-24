@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>编辑</title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/ionicons.min.css">
+<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="dist/css/app.css">
+
+<style type="text/css">
+    
+</style>
+
+</head>
+<body class="hold-transition skin-blue">
+
+<div class=""> 
+  <!--
+  <section class="content-header"> 
+  </section>
+   -->
+  <section class="content">
+  
+    <div class="edit-form">
+        <div class="row ">
+            <form class="form-horizontal" id="test" action="http://localhost:9191/User">
+              <fieldset>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label" for="inputSuccess">用户名</label>
+                    <div class="col-xs-8 input-group">
+                        <input type="text" name="name" class="form-control" placeholder="Input with success">
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="display:none;"></span>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label" for="inputSuccess">登陆名</label>
+                    <div class="col-xs-8 input-group">
+                        <input type="text" name="loginName" class="form-control" data-field="" placeholder="Input with success">
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="display:none;"></span>
+                        <span class="help-block"></span>
+                    </div>
+                </div>            
+                <div class="form-group">
+                    <label class="col-xs-2 control-label" for="inputSuccess">密码</label>
+                    <div class="col-xs-8 input-group">
+                        <input type="text" name="password" class="form-control" data-field="" placeholder="Input with success">
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="display:none;"></span>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label" for="inputSuccess">登陆时间</label>
+                    <div class="col-xs-8 input-group date form_datetime">
+                        <input type="text" name="loginDate" class="form-control laydate-icon" data-type="date" placeholder="Input with success" id="test">
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="display:none;"></span>                        
+                    </div>
+                </div>                
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-12">
+                       <button type="submit" class="btn btn-primary">保存</button>
+                       <button type="button" class="btn btn-primary btn_clean">清除</button>
+                    </div>            
+                </div>
+              </fieldset>
+            </form>
+        </div>
+    </div>
+  
+  </section>
+</div>
+
+<script src="plugins/jQuery/jQuery-2.2.0.min.js"></script> 
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/datepicker/bootstrap-datepicker.js"></script> 
+<script src="plugins/datatables/jquery.dataTables.min.js"></script> 
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script> 
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script> 
+<script src="plugins/fastclick/fastclick.js"></script> 
+<script src="plugins/json/jquery.json.min.js"></script>
+<script src="plugins/laydate/laydate.dev.js"></script>
+
+<script src="dist/js/app.min.js"></script> 
+<script src="dist/js/demo.js"></script> 
+<script src="dist/js/global.js"></script>
+<script src="dist/js/date.js"></script> 
+<script src="dist/js/form.js"></script> 
+
+<script>
+$(function () {
+    //$(".form_datetime").datepicker({format: 'yyyy-mm-dd hh:ii'});    
+    //laydate({ elem: '#test'});
+    /*
+    laydate.skin('molv');
+    laydate({  
+        elem: '#test',
+        event: 'focus',
+        format: 'YYYY-MM-DD hh:mm:ss',
+        istime: true
+    });      
+    */
+    
+    var form = new App.Form("#test");
+    var uerid = App.getUrlParameter('id');    
+    if (uerid) {     
+    	form.load('http://localhost:9191/User/' + uerid);
+    }
+});  
+</script>
+</body>
+</html>

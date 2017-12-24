@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>AdminLTE 2 | Data Tables</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<!-- Bootstrap 3.3.6 -->
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="css/ionicons.min.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition skin-blue">
+
+<!-- Content Wrapper. Contains page content -->
+<div class="">
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+	  <!-- 路径导航 --> 
+	  <div class="col-md-12">
+	      <ul class="page-breadcrumb breadcrumb">
+	          <li>
+	              <i class="fa fa-home"></i>
+	              <a href="#">系统设置</a>
+	              <i class="fa fa-angle-right"></i>
+	          </li>
+	
+	          <li><a href="#">用户管理</a>
+	          </li>
+	      </ul>
+	  </div>
+	</section>
+
+	<!-- Main content -->
+	<section class="content">
+	  <div class="row">
+	    <div class="col-xs-12">
+          <div class="box-header">
+              <h3 class="box-title">表格标题</h3>
+              <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </div>            
+          </div>	  
+	      <div class="box"> 
+	        <div class="box-body">        	
+	          </div>
+	          <table id="example1" class="table table-bordered table-striped table-hover">
+	            <thead>
+	            <tr class="info">
+	              <th field="id">ID</th>
+	              <th field="name">名字</th>
+	              <th field="loginName">登陆名</th>
+	              <th field="loginIp">登陆IP</th>
+	              <th field="loginDate">登陆日期</th>	              
+	            </tr>
+	            </thead>          
+	          </table>
+	        </div>
+	        <!-- /.box-body --> 
+	      </div>
+	    </div>
+	  </div>
+	  <!-- /.row --> 
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper --> 
+
+<!-- jQuery 2.2.0 --> 
+<script src="plugins/jQuery/jQuery-2.2.0.min.js"></script> 
+<!-- Bootstrap 3.3.6 --> 
+<script src="bootstrap/js/bootstrap.min.js"></script> 
+<!-- DataTables --> 
+<script src="plugins/datatables/jquery.dataTables.min.js"></script> 
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script> 
+<!-- SlimScroll --> 
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script> 
+<!-- FastClick --> 
+<script src="plugins/fastclick/fastclick.js"></script> 
+<!-- AdminLTE App --> 
+<script src="dist/js/app.min.js"></script> 
+<!-- AdminLTE for demo purposes --> 
+<script src="dist/js/demo.js"></script> 
+<script src="dist/js/table.js"></script>
+<!-- page script --> 
+<script>
+
+
+$(function () {
+
+	var table = new App.Table("example1","searchDiv");
+	table.init();
+});  
+</script>
+</body>
+</html>
+

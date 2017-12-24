@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>AdminLTE 2 | Data Tables</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<!-- Bootstrap 3.3.6 -->
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="css/ionicons.min.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition skin-blue">
+
+<!-- Content Wrapper. Contains page content -->
+<div class=""> 
+  <!-- Content Header (Page header) -->
+  <section class="content-header"> 
+    <!-- 路径导航 --> 
+    <a href="/"><i class="fa fa-home"></i> 首页</a> &gt; <a href="/area/list">国家管理</a>&nbsp;&nbsp;<small>国家列表</small> </section>
+  
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <form class="form-horizontal" role="form">
+        <fieldset>
+          <legend>配置数据源</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="ds_host">主机名</label>
+            <div class="col-sm-4">
+              <input class="form-control" id="ds_host" type="text" placeholder="192.168.1.161"/>
+            </div>
+            <label class="col-sm-2 control-label" for="ds_name">数据库名</label>
+            <div class="col-sm-4">
+              <input class="form-control" id="ds_name" type="text" placeholder="msh"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="ds_username">用户名</label>
+            <div class="col-sm-4">
+              <input class="form-control" id="ds_username" type="text" placeholder="root"/>
+            </div>
+            <label class="col-sm-2 control-label" for="ds_password">密码</label>
+            <div class="col-sm-4">
+              <input class="form-control" id="ds_password" type="password" placeholder="123456"/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>选择相关表</legend>
+          <div class="form-group">
+            <label for="disabledSelect"  class="col-sm-2 control-label">表名</label>
+            <div class="col-sm-10">
+              <select id="disabledSelect" class="form-control">
+                <option>禁止选择</option>
+                <option>禁止选择</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>字段名</legend>
+          <div class="form-group">
+            <label for="disabledSelect"  class="col-sm-2 control-label">表名</label>
+            <div class="col-sm-10">
+              <select id="disabledSelect" class="form-control">
+                <option>禁止选择</option>
+                <option>禁止选择</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <!-- /.row --> 
+  </section>
+  <!-- /.content --> 
+</div>
+<!-- /.content-wrapper --> 
+
+<!-- jQuery 2.2.0 --> 
+<script src="plugins/jQuery/jQuery-2.2.0.min.js"></script> 
+<!-- Bootstrap 3.3.6 --> 
+<script src="bootstrap/js/bootstrap.min.js"></script> 
+<!-- DataTables --> 
+<script src="plugins/datatables/jquery.dataTables.min.js"></script> 
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script> 
+<!-- SlimScroll --> 
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script> 
+<!-- FastClick --> 
+<script src="plugins/fastclick/fastclick.js"></script> 
+<!-- AdminLTE App --> 
+<script src="dist/js/app.min.js"></script> 
+<!-- AdminLTE for demo purposes --> 
+<script src="dist/js/demo.js"></script> 
+<!-- page script --> 
+<script>
+$(function () {
+  
+
+	
+});  
+</script>
+</body>
+</html>

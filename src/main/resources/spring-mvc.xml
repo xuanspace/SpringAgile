@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	  http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	  http://www.springframework.org/schema/context
+	  http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	  http://www.springframework.org/schema/mvc
+	  http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	
+	<!-- 自动扫描@controller -->
+	<context:component-scan base-package="com.agile.controller"/>
+    <context:component-scan base-package="com.agile.validator"/>
+    <context:component-scan base-package="com.agile.framework.auth"/>
+
+	<!-- 控制器扫描和异常处理 -->
+	<!--
+	<context:component-scan base-package="com.agile.controller" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController" />
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+	<context:component-scan base-package="com.agile.framework.controller"/>
+	-->
+	
+	<!-- 全局异常处理 -->
+	<context:component-scan base-package="com.agile.framework.exception" />
+
+	<!-- 启用MVC注解 -->
+	<mvc:annotation-driven />
+
+	<!-- 拦截器设置 -->
+	<mvc:interceptors>
+		<bean class="com.agile.framework.interceptor.GlobalInterceptor" />
+		<bean class="com.agile.framework.interceptor.DataTableInterceptor" />
+	</mvc:interceptors>
+
+	<!-- 配置消息资源文件 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages" />
+	</bean>
+
+	<!-- 静态资源文件的访问-->
+	<!--
+	<mvc:resources mapping="/images/**" location="/WEB-INF/images/" />
+	<mvc:resources mapping="/css/**" location="/WEB-INF/css/" />
+	<mvc:resources mapping="/js/**" location="/WEB-INF/js/" />
+	<mvc:resources mapping="/html/**" location="/WEB-INF/html/" />
+	-->
+	
+	<!-- 访问静态资源不在上面的配置时按照缺省配置来访问 -->	    
+    <mvc:default-servlet-handler/>
+	
+	<!--配置JSP视图解析器 -->
+	<bean id="jspViewResolver" 
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">		
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+		<property name="suffix" value=".jsp"/>		  
+        <property name="order" value="1" />
+	</bean>  	
+
+	<bean id="beanNameViewResolver" 
+		class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+	
+    <!-- 配置可以直接访问WEB-INF下的资源  
+        path：访问路径  
+        view-name：jsp文件名（上面配置了org.springframework.web.servlet.view.InternalResourceViewResolver所以不用写全称）  
+     -->  
+    <mvc:view-controller path="/error" view-name="error"/>
+
+
+	<!-- 配置文件上传 -->
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 默认编码 -->
+		<property name="defaultEncoding" value="utf-8" />
+		<!-- 文件大小最大值 -->
+		<property name="maxUploadSize" value="10485760000" />
+		<!-- 内存中的最大值 -->
+		<property name="maxInMemorySize" value="40960" />
+	</bean>
+
+</beans>  

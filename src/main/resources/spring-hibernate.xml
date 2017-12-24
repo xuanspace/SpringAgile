@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"	
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	  http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	  http://www.springframework.org/schema/aop
+	  http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	  http://www.springframework.org/schema/context
+	  http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	  http://www.springframework.org/schema/tx
+	  http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+      http://www.springframework.org/schema/task
+	  http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+	
+	<!-- 自动扫描将注解类, 由spring容器管理 -->
+	<context:component-scan base-package="com.agile.dao.hibernate" />
+	<context:component-scan base-package="com.agile.service.hibernate" />
+	<context:component-scan base-package="com.agile.framework.hibernate;" />
+	
+	<!-- 配置hibernate session工厂 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+			    <!-- 设置自动创建|更新|验证数据库表结构 -->			
+				<prop key="hibernate.hbm2ddl.auto">validate</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				
+				<prop key="hibernate.generate_statistics">true</prop> 
+				<prop key="hibernate.connection.release_mode">auto</prop> 
+				<prop key="hibernate.autoReconnect">true</prop>
+				<prop key="current_session_context_class">thread</prop> 
+			</props>
+		</property>
+
+		<!-- 自动扫描com.phn.model包中的bean实体类-->
+		<property name="packagesToScan">
+			<list>
+				<value>com.agile.model</value>
+			</list>
+		</property>
+	</bean>
+
+    <!-- 定义 Autowired 自动注入 bean -->
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+    
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" name="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+    
+	<!-- 注解方式配置 -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
+
+	<!-- 声明式容器事务管理 -->
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+		   <!-- 事务执行方式
+		        REQUIRED：(默认值)指定当前方法必需在事务环境中运行，
+		                          如果当前有事务环境就加入当前正在执行的事务环境，
+		                          如果当前没有事务，就新建一个事务
+		        SUPPORTS: 
+		                           如当前有transaction,则在transaction状态下执行
+		                           如果当前没有transaction,在无transaction状态下执行
+		    -->
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="append*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="edit*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="repair" propagation="REQUIRED" />
+			<tx:method name="delAndRepair" propagation="REQUIRED" />
+			<tx:method name="execute*" propagation="REQUIRED" />			
+			<tx:method name="submit*" propagation="REQUIRED" />
+			<tx:method name="batch*" propagation="REQUIRED" />
+
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="count*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="load*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="search*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="datagrid*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="is*" />
+			
+			<tx:method name="*" propagation="REQUIRED" />
+			<tx:method name="*" read-only="true" />		    
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 定义切面service中执行有关的hibernate session事务操作 -->
+	<aop:config expose-proxy="true">
+		<!-- 只对业务逻辑层实施事务 -->
+		<aop:pointcut id="transactionPointcut" expression="(execution(* com.agile.service.hibernate..*.*(..))) or (execution(* com.agile.dao.hibernate..*.*(..)))" />
+		<!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
+		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
+	</aop:config>
+
+</beans>

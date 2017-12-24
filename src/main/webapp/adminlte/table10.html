@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>AdminLTE 2 | Data Tables</title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/ionicons.min.css">
+<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" href="plugins/datatables/dataTables.select.css">
+<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="dist/css/app.css">
+</head>
+
+<body class="hold-transition skin-blue">
+
+<div class="">
+	<section class="content-header">
+	  <!-- 路径导航 --> 
+	</section>
+
+	<section class="content">
+    
+        <div class="box" id="table_search">>
+            <div class="box-header with-border">
+              <h3 class="box-title">查询搜索</h3>
+              <form class="form-horizontal" role="form">
+                <fieldset>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="name">用户ID</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" type="text" name="id" placeholder="用户ID"/>
+                    </div>
+                    <label class="col-sm-2 control-label" for="name">用户名</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" type="text" name="name" placeholder="用户名"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="loginName">用户登陆名</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" type="text" name="loginName" data-op="=" placeholder="用户登陆名"/>
+                    </div>
+                    <label class="col-sm-2 control-label" for="loginDate">登陆时间</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" type="password" name="loginDate" placeholder="登陆时间"/>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-search">搜索</button>
+                  <button type="button" class="btn btn-primary btn_clean">清除</button>
+                </fieldset>
+              </form>
+            </div>
+        </div>
+    
+        <div class="box">
+			<div class="box-header with-border">
+              <h3 class="box-title">数据表格</h3>
+              <div class="box-tools">
+                <div id="operation">
+                  <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-default" id="btn-add">
+		                <i class="fa fa-plus"></i> 新增
+		            </button>
+		            <button type="button" class="btn btn-default" id="btn-edit">
+	                  <i class="fa fa-edit"></i> 编辑
+	                </button>
+	                <button type="button" class="btn btn-default" id="btn-delete">
+	                  <i class="fa fa-remove"></i> 删除
+	                </button>              
+	                <button type="button" class="btn btn-default" id="btn-refresh">
+	                  <i class="fa fa-refresh"></i> 刷新
+	                </button>		              
+                  </div>
+                </div>
+              </div>
+            </div>        
+            
+            <!-- /.box-header -->
+			<div class="box-body">
+              <table id="example1" class="table table-bordered table-striped table-hover">
+	            <thead>
+	            <tr class="info">
+	              <th data-name="id">ID</th>
+	              <th data-name="name">名字</th>
+	              <th data-name="loginName">登陆名</th>
+	              <th data-name="loginIp">登陆IP</th>
+	              <th data-name="loginDate" data-type="datetime">登陆日期</th>	              
+	            </tr>
+	            </thead>          
+              </table>
+            </div>
+          </div>    
+	</section>
+</div>
+
+<script src="plugins/jQuery/jQuery-2.2.0.min.js"></script> 
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/datatables/jquery.dataTables.js"></script> 
+<script src="plugins/datatables/dataTables.bootstrap.js"></script> 
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script> 
+<script src="plugins/fastclick/fastclick.js"></script>
+<script src="plugins/layer/layer.js"></script> 
+<script src="plugins/laydate/laydate.dev.js"></script>
+<script src="dist/js/app.min.js"></script> 
+<script src="dist/js/demo.js"></script>
+
+<script src="dist/js/global.js"></script>
+<script src="dist/js/date.js"></script>
+<script src="dist/js/form.js"></script>
+<script src="dist/js/iframe.js"></script>
+<script src="dist/js/table.js"></script>
+<script>
+
+
+$(function () {	
+	var base = "http://localhost:9191/Agile";
+	var table = new App.Table("example1");
+	table.url = base + "/user";
+	table.setTableButton("operation");
+	table.setSearchForm("table_search");
+	table.addCheckboxColumn();
+	table.setRowFormat(function(row, data) {
+		$('td:eq(5)', row).html(App.formatDate(data.loginDate));
+	});
+	table.setRowAdd(function() {
+		return base + '/adminlte/datepicker.html';
+	});	
+	table.setRowEdit(function(data) {
+		return base + '/adminlte/datepicker.html?id=' + data.id;
+	});
+	table.setRowDelete(function(data) {
+		return base + '/User/del/' + data.id;
+	});
+	
+	table.create();
+	
+});  
+</script>
+</body>
+</html>
+
