@@ -4,6 +4,7 @@
  */
 package com.agile.model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -25,10 +26,15 @@ public class Group extends BaseEntity {
 	private String name;
 	private String description;
 	private String code;
-	private String role;
+	private Integer role;
 	private Short type;
 	private Short status;
 	private Integer sort;
+	private String createBy;
+	private Date createTime;
+	private String updateBy;
+	private Date updateTime;
+	private String deleted;
 
 	public Group() {
 	
@@ -40,7 +46,7 @@ public class Group extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getId(){
 		return id;
 	}
@@ -49,7 +55,7 @@ public class Group extends BaseEntity {
 		this.id = id;
 	}
     
-    @Column(name = "parent_id", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="parent_id", columnDefinition="int", nullable = true, length = 10)
 	public Integer getParentId(){
 		return parentId;
 	}
@@ -58,7 +64,7 @@ public class Group extends BaseEntity {
 		this.parentId = parentId;
 	}
     
-    @Column(name = "name", columnDefinition="varchar", nullable = true, length = 100)
+    @Column(name="name", columnDefinition="varchar", nullable = true, length = 50)
 	public String getName(){
 		return name;
 	}
@@ -67,7 +73,7 @@ public class Group extends BaseEntity {
 		this.name = name;
 	}
     
-    @Column(name = "description", columnDefinition="varchar", nullable = true, length = 255)
+    @Column(name="description", columnDefinition="varchar", nullable = true, length = 255)
 	public String getDescription(){
 		return description;
 	}
@@ -76,7 +82,7 @@ public class Group extends BaseEntity {
 		this.description = description;
 	}
     
-    @Column(name = "code", columnDefinition="varchar", nullable = true, length = 50)
+    @Column(name="code", columnDefinition="varchar", nullable = true, length = 50)
 	public String getCode(){
 		return code;
 	}
@@ -85,16 +91,16 @@ public class Group extends BaseEntity {
 		this.code = code;
 	}
     
-    @Column(name = "role", columnDefinition="varchar", nullable = true, length = 20)
-	public String getRole(){
+    @Column(name="role", columnDefinition="int", nullable = true, length = 10)
+	public Integer getRole(){
 		return role;
 	}
 
-	public void setRole(String role){
+	public void setRole(Integer role){
 		this.role = role;
 	}
     
-    @Column(name = "type", columnDefinition="tinyint", nullable = true, length = 3)
+    @Column(name="type", columnDefinition="tinyint", nullable = true, length = 3)
 	public Short getType(){
 		return type;
 	}
@@ -103,7 +109,7 @@ public class Group extends BaseEntity {
 		this.type = type;
 	}
     
-    @Column(name = "status", columnDefinition="tinyint", nullable = true, length = 3)
+    @Column(name="status", columnDefinition="tinyint", nullable = true, length = 3)
 	public Short getStatus(){
 		return status;
 	}
@@ -112,12 +118,57 @@ public class Group extends BaseEntity {
 		this.status = status;
 	}
     
-    @Column(name = "sort", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="sort", columnDefinition="int", nullable = true, length = 10)
 	public Integer getSort(){
 		return sort;
 	}
 
 	public void setSort(Integer sort){
 		this.sort = sort;
+	}
+    
+    @Column(name="create_by", columnDefinition="varchar", nullable = true, length = 50)
+	public String getCreateBy(){
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy){
+		this.createBy = createBy;
+	}
+    
+    @Column(name="create_time", columnDefinition="datetime", nullable = true, length = 19)
+	public Date getCreateTime(){
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime){
+		this.createTime = createTime;
+	}
+    
+    @Column(name="update_by", columnDefinition="varchar", nullable = true, length = 50)
+	public String getUpdateBy(){
+		return updateBy;
+	}
+
+	public void setUpdateBy(String updateBy){
+		this.updateBy = updateBy;
+	}
+    
+    @Column(name="update_time", columnDefinition="datetime", nullable = true, length = 19)
+	public Date getUpdateTime(){
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime){
+		this.updateTime = updateTime;
+	}
+    
+    @Column(name="deleted", columnDefinition="char", nullable = true, length = 1)
+	public String getDeleted(){
+		return deleted;
+	}
+
+	public void setDeleted(String deleted){
+		this.deleted = deleted;
 	}
 }

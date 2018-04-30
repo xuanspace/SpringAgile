@@ -175,9 +175,13 @@ public class ExcelExport {
     		// 没有指定表头,则整个对象属性值导出
     		if (this.headers == null) {
         		for (int columnIndex = 0; columnIndex<fieldNames.size(); columnIndex++) {
-        			Cell cell = dataRow.createCell(columnIndex);
-        			Object value = ReflectUtils.getFieldValue(object, fieldNames.get(columnIndex));
-        			cell.setCellValue(value.toString());
+        			try {
+	        			Cell cell = dataRow.createCell(columnIndex);        			
+	        			Object value = ReflectUtils.getFieldValue(object, fieldNames.get(columnIndex));
+	        			cell.setCellValue(value.toString());
+        			}catch(Exception e) {
+        				e.printStackTrace();
+        			}        			
         			rowIndex++;
         		}
     		}

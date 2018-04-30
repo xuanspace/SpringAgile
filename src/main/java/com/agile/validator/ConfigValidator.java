@@ -5,21 +5,18 @@
 
 package com.agile.validator;
 
-import com.agile.framework.validate.AbstractValidator;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.Errors;
+import com.agile.common.BaseValidator;
 
 import com.agile.model.Config;
 
 @Repository("configValidator")
-public class ConfigValidator extends AbstractValidator<Config> {
-
-    public ConfigValidator() {
-    }
-
+public class ConfigValidator extends BaseValidator<Config> {
+   
     @Override
     public boolean supports(Class<?> clazz) {
-    return Config.class.equals(clazz);
+    	return Config.class.equals(clazz);
     }
 
     @Override

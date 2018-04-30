@@ -6,7 +6,9 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -132,4 +134,18 @@ public class EntityUtils {
 		}
 		return null;
 	}
+
+	/**
+	 * 获取实体类字段名
+	 * @return  字段名列表
+     */	
+	public static List<String> getFieldNames(Class<?> clazz) {
+		List<String> names = new ArrayList<String>(); 
+        Field[] fields = clazz.getDeclaredFields();  
+        for (Field field : fields) {
+        	names.add(field.getName());
+        }
+        return names;
+    }  
+	
 }

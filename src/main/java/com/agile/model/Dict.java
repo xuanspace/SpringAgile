@@ -23,15 +23,17 @@ public class Dict extends BaseEntity {
 	
 	private Integer id;
 	private Integer parentId;
+	private String name;
+	private String code;
 	private String value;
 	private String label;
-	private String type;
+	private Short type;
 	private String description;
 	private Integer sort;
 	private String createBy;
-	private Date createDate;
+	private Date createTime;
 	private String updateBy;
-	private Date updateDate;
+	private Date updateTime;
 	private String deleted;
 
 	public Dict() {
@@ -44,7 +46,7 @@ public class Dict extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getId(){
 		return id;
 	}
@@ -53,7 +55,7 @@ public class Dict extends BaseEntity {
 		this.id = id;
 	}
     
-    @Column(name = "parent_id", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="parent_id", columnDefinition="int", nullable = true, length = 10)
 	public Integer getParentId(){
 		return parentId;
 	}
@@ -62,7 +64,25 @@ public class Dict extends BaseEntity {
 		this.parentId = parentId;
 	}
     
-    @Column(name = "value", columnDefinition="varchar", nullable = false, length = 100)
+    @Column(name="name", columnDefinition="varchar", nullable = true, length = 50)
+	public String getName(){
+		return name;
+	}
+
+	public void setName(String name){
+		this.name = name;
+	}
+    
+    @Column(name="code", columnDefinition="varchar", nullable = true, length = 50)
+	public String getCode(){
+		return code;
+	}
+
+	public void setCode(String code){
+		this.code = code;
+	}
+    
+    @Column(name="value", columnDefinition="varchar", nullable = false, length = 100)
 	public String getValue(){
 		return value;
 	}
@@ -71,7 +91,7 @@ public class Dict extends BaseEntity {
 		this.value = value;
 	}
     
-    @Column(name = "label", columnDefinition="varchar", nullable = false, length = 100)
+    @Column(name="label", columnDefinition="varchar", nullable = false, length = 100)
 	public String getLabel(){
 		return label;
 	}
@@ -80,16 +100,16 @@ public class Dict extends BaseEntity {
 		this.label = label;
 	}
     
-    @Column(name = "type", columnDefinition="varchar", nullable = false, length = 100)
-	public String getType(){
+    @Column(name="type", columnDefinition="tinyint", nullable = false, length = 3)
+	public Short getType(){
 		return type;
 	}
 
-	public void setType(String type){
+	public void setType(Short type){
 		this.type = type;
 	}
     
-    @Column(name = "description", columnDefinition="varchar", nullable = false, length = 100)
+    @Column(name="description", columnDefinition="varchar", nullable = false, length = 255)
 	public String getDescription(){
 		return description;
 	}
@@ -98,7 +118,7 @@ public class Dict extends BaseEntity {
 		this.description = description;
 	}
     
-    @Column(name = "sort", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="sort", columnDefinition="int", nullable = true, length = 10)
 	public Integer getSort(){
 		return sort;
 	}
@@ -107,7 +127,7 @@ public class Dict extends BaseEntity {
 		this.sort = sort;
 	}
     
-    @Column(name = "create_by", columnDefinition="varchar", nullable = false, length = 64)
+    @Column(name="create_by", columnDefinition="varchar", nullable = false, length = 50)
 	public String getCreateBy(){
 		return createBy;
 	}
@@ -116,16 +136,16 @@ public class Dict extends BaseEntity {
 		this.createBy = createBy;
 	}
     
-    @Column(name = "create_date", columnDefinition="datetime", nullable = false, length = 19)
-	public Date getCreateDate(){
-		return createDate;
+    @Column(name="create_time", columnDefinition="datetime", nullable = false, length = 19)
+	public Date getCreateTime(){
+		return createTime;
 	}
 
-	public void setCreateDate(Date createDate){
-		this.createDate = createDate;
+	public void setCreateTime(Date createTime){
+		this.createTime = createTime;
 	}
     
-    @Column(name = "update_by", columnDefinition="varchar", nullable = false, length = 64)
+    @Column(name="update_by", columnDefinition="varchar", nullable = false, length = 50)
 	public String getUpdateBy(){
 		return updateBy;
 	}
@@ -134,16 +154,16 @@ public class Dict extends BaseEntity {
 		this.updateBy = updateBy;
 	}
     
-    @Column(name = "update_date", columnDefinition="datetime", nullable = false, length = 19)
-	public Date getUpdateDate(){
-		return updateDate;
+    @Column(name="update_time", columnDefinition="datetime", nullable = false, length = 19)
+	public Date getUpdateTime(){
+		return updateTime;
 	}
 
-	public void setUpdateDate(Date updateDate){
-		this.updateDate = updateDate;
+	public void setUpdateTime(Date updateTime){
+		this.updateTime = updateTime;
 	}
     
-    @Column(name = "deleted", columnDefinition="char", nullable = false, length = 1)
+    @Column(name="deleted", columnDefinition="char", nullable = false, length = 1)
 	public String getDeleted(){
 		return deleted;
 	}

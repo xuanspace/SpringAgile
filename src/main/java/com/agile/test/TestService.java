@@ -9,7 +9,7 @@ import com.agile.service.interfaces.UserService;
 public class TestService {
 
 	public static void main(String[] args) {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-mvc.xml", "spring-hibernate.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:spring-mvc.xml", "classpath:spring-database.xml","classpath:spring-hibernate.xml");
 		
 		UserService userService = (UserService) ctx.getBean("userService");
 		User user = userService.get(1);

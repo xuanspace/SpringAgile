@@ -21,6 +21,9 @@
 	<context:component-scan base-package="com.agile.service.hibernate" />
 	<context:component-scan base-package="com.agile.framework.hibernate;" />
 	
+	<!-- 引入Hibernate配置 -->
+	<!-- <context:property-placeholder location="classpath:hibernate.properties" />-->
+
 	<!-- 配置hibernate session工厂 -->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -39,7 +42,7 @@
 			</props>
 		</property>
 
-		<!-- 自动扫描com.phn.model包中的bean实体类-->
+		<!-- 自动扫描com.agile.model包中的bean实体类-->
 		<property name="packagesToScan">
 			<list>
 				<value>com.agile.model</value>
@@ -56,7 +59,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
     
-	<!-- 注解方式配置 -->
+	<!-- 使用@Transactional注解方式事务 -->
 	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
 
 	<!-- 声明式容器事务管理 -->

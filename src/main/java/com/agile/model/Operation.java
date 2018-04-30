@@ -21,6 +21,8 @@ public class Operation extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	private String name;
+	private String description;
 
 	public Operation() {
 	
@@ -32,12 +34,30 @@ public class Operation extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getId(){
 		return id;
 	}
 
 	public void setId(Integer id){
 		this.id = id;
+	}
+    
+    @Column(name="name", columnDefinition="varchar", nullable = true, length = 50)
+	public String getName(){
+		return name;
+	}
+
+	public void setName(String name){
+		this.name = name;
+	}
+    
+    @Column(name="description", columnDefinition="varchar", nullable = true, length = 255)
+	public String getDescription(){
+		return description;
+	}
+
+	public void setDescription(String description){
+		this.description = description;
 	}
 }

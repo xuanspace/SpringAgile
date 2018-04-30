@@ -5,21 +5,18 @@
 
 package com.agile.validator;
 
-import com.agile.framework.validate.AbstractValidator;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.Errors;
+import com.agile.common.BaseValidator;
 
 import com.agile.model.Area;
 
 @Repository("areaValidator")
-public class AreaValidator extends AbstractValidator<Area> {
-
-    public AreaValidator() {
-    }
-
+public class AreaValidator extends BaseValidator<Area> {
+   
     @Override
     public boolean supports(Class<?> clazz) {
-    return Area.class.equals(clazz);
+    	return Area.class.equals(clazz);
     }
 
     @Override

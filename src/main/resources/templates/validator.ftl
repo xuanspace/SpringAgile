@@ -12,21 +12,18 @@ This file is part of Code Generator.
 
 package com.agile.validator;
 
-import com.agile.framework.validate.AbstractValidator;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.Errors;
+import com.agile.common.BaseValidator;
 
-import com.agile.entity.${className};
+import com.agile.model.${className};
 
 @Repository("${className?uncap_first}Validator")
-public class ${className}Validator extends AbstractValidator<${className}> {
-
-    public ${className}Validator() {
-    }
-
+public class ${className}Validator extends BaseValidator<${className}> {
+   
     @Override
     public boolean supports(Class<?> clazz) {
-    return ${className}.class.equals(clazz);
+    	return ${className}.class.equals(clazz);
     }
 
     @Override

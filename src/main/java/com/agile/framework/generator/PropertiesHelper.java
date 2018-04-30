@@ -9,7 +9,7 @@ public class PropertiesHelper {
     
     static {  
         try {              
-            properties.load(PropertiesHelper.class.getClassLoader().getResourceAsStream("hibernate.properties"));  
+            properties.load(PropertiesHelper.class.getClassLoader().getResourceAsStream("jdbc.properties"));  
             for (Entry<Object, Object> entry : properties.entrySet()) {
             	String key = entry.getKey().toString().trim();
             	String value = entry.getValue().toString().trim();

@@ -4,6 +4,7 @@
  */
 package com.agile.model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -23,6 +24,11 @@ public class UserOrg extends BaseEntity {
 	private Integer id;
 	private Integer userId;
 	private Integer orgId;
+	private String createBy;
+	private Date createTime;
+	private String updateBy;
+	private Date updateTime;
+	private String deleted;
 
 	public UserOrg() {
 	
@@ -34,7 +40,7 @@ public class UserOrg extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getId(){
 		return id;
 	}
@@ -43,7 +49,7 @@ public class UserOrg extends BaseEntity {
 		this.id = id;
 	}
     
-    @Column(name = "user_id", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="user_id", columnDefinition="int", nullable = true, length = 10)
 	public Integer getUserId(){
 		return userId;
 	}
@@ -52,12 +58,57 @@ public class UserOrg extends BaseEntity {
 		this.userId = userId;
 	}
     
-    @Column(name = "org_id", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="org_id", columnDefinition="int", nullable = true, length = 10)
 	public Integer getOrgId(){
 		return orgId;
 	}
 
 	public void setOrgId(Integer orgId){
 		this.orgId = orgId;
+	}
+    
+    @Column(name="create_by", columnDefinition="varchar", nullable = true, length = 50)
+	public String getCreateBy(){
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy){
+		this.createBy = createBy;
+	}
+    
+    @Column(name="create_time", columnDefinition="datetime", nullable = true, length = 19)
+	public Date getCreateTime(){
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime){
+		this.createTime = createTime;
+	}
+    
+    @Column(name="update_by", columnDefinition="varchar", nullable = true, length = 50)
+	public String getUpdateBy(){
+		return updateBy;
+	}
+
+	public void setUpdateBy(String updateBy){
+		this.updateBy = updateBy;
+	}
+    
+    @Column(name="update_time", columnDefinition="datetime", nullable = true, length = 19)
+	public Date getUpdateTime(){
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime){
+		this.updateTime = updateTime;
+	}
+    
+    @Column(name="deleted", columnDefinition="char", nullable = true, length = 1)
+	public String getDeleted(){
+		return deleted;
+	}
+
+	public void setDeleted(String deleted){
+		this.deleted = deleted;
 	}
 }

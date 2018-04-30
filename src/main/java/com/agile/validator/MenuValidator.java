@@ -5,21 +5,18 @@
 
 package com.agile.validator;
 
-import com.agile.framework.validate.AbstractValidator;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.Errors;
+import com.agile.common.BaseValidator;
 
 import com.agile.model.Menu;
 
 @Repository("menuValidator")
-public class MenuValidator extends AbstractValidator<Menu> {
-
-    public MenuValidator() {
-    }
-
+public class MenuValidator extends BaseValidator<Menu> {
+   
     @Override
     public boolean supports(Class<?> clazz) {
-    return Menu.class.equals(clazz);
+    	return Menu.class.equals(clazz);
     }
 
     @Override

@@ -6,25 +6,25 @@ package com.agile.modules.database;
 
 import java.util.Date;
 
-import com.agile.framework.query.Field;
-import com.agile.framework.query.Table;
+import com.agile.framework.query.SQLField;
+import com.agile.framework.query.SQLTable;
 
-public class SYS_ORGANIZATION extends Table {
+public class SYS_ORGANIZATION extends SQLTable {
 
-	public final static Field<Integer> ID = new Field<Integer>("id"); 
-	public final static Field<Integer> PARENT_ID = new Field<Integer>("parent_id"); 
-	public final static Field<String> NAME = new Field<String>("name"); 
-	public final static Field<String> DESCRIPTION = new Field<String>("description"); 
-	public final static Field<String> PATH = new Field<String>("path"); 
-	public final static Field<Integer> SORT = new Field<Integer>("sort"); 
-	public final static Field<String> CODE = new Field<String>("code"); 
-	public final static Field<Integer> TYPE = new Field<Integer>("type"); 
-	public final static Field<Integer> LEVEL = new Field<Integer>("level"); 
-	public final static Field<String> CREATE_BY = new Field<String>("create_by"); 
-	public final static Field<Date> CREATE_DATE = new Field<Date>("create_date"); 
-	public final static Field<String> UPDATE_BY = new Field<String>("update_by"); 
-	public final static Field<Date> UPDATE_DATE = new Field<Date>("update_date"); 
-	public final static Field<String> DELETED = new Field<String>("deleted"); 
+	public final static SQLField<Integer> ID = new SQLField<Integer>("sys_organization", "id"); 
+	public final static SQLField<Integer> PARENT_ID = new SQLField<Integer>("sys_organization", "parent_id"); 
+	public final static SQLField<String> NAME = new SQLField<String>("sys_organization", "name"); 
+	public final static SQLField<String> DESCRIPTION = new SQLField<String>("sys_organization", "description"); 
+	public final static SQLField<String> PATH = new SQLField<String>("sys_organization", "path"); 
+	public final static SQLField<Integer> TYPE = new SQLField<Integer>("sys_organization", "type"); 
+	public final static SQLField<String> CODE = new SQLField<String>("sys_organization", "code"); 
+	public final static SQLField<Integer> SORT = new SQLField<Integer>("sys_organization", "sort"); 
+	public final static SQLField<Integer> LEVEL = new SQLField<Integer>("sys_organization", "level"); 
+	public final static SQLField<String> CREATE_BY = new SQLField<String>("sys_organization", "create_by"); 
+	public final static SQLField<Date> CREATE_TIME = new SQLField<Date>("sys_organization", "create_time"); 
+	public final static SQLField<String> UPDATE_BY = new SQLField<String>("sys_organization", "update_by"); 
+	public final static SQLField<Date> UPDATE_TIME = new SQLField<Date>("sys_organization", "update_time"); 
+	public final static SQLField<String> DELETED = new SQLField<String>("sys_organization", "deleted"); 
 
 	@Override
 	public String getName() {
@@ -35,4 +35,16 @@ public class SYS_ORGANIZATION extends Table {
 	public String getComment() {
 		return null;
 	}
+	
+	@Override
+	public String toString() {
+	    return "sys_organization";
+    }
+	
+	public SQLField<?>[] getFileds() {
+		SQLField<?>[] fields = {
+			ID,PARENT_ID,NAME,DESCRIPTION,PATH,TYPE,CODE,SORT,LEVEL,CREATE_BY,CREATE_TIME,UPDATE_BY,UPDATE_TIME,DELETED,
+		}; 
+		return fields;
+	}	
 }

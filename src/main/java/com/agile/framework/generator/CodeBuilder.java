@@ -49,7 +49,7 @@ public class CodeBuilder {
 	private Template templateValidator;
     private Template templateJspView;
     private Template templateTable;
-    private Template templateTables;    
+    private Template templateDatabase;    
     
 	public CodeBuilder() throws IOException {
 		schema = new SchemaHelper();
@@ -78,7 +78,7 @@ public class CodeBuilder {
 		templateValidator = config.getTemplate("validator.ftl");
         templateJspView = config.getTemplate("jspview.ftl");        
         templateTable = config.getTemplate("table.ftl");
-        templateTables = config.getTemplate("tables.ftl");
+        templateDatabase = config.getTemplate("db.ftl");
 	}
 	   
     /*** 
@@ -203,11 +203,11 @@ public class CodeBuilder {
 	}
 	 
     /*** 
-     * 生成Tables类代码 
+     * 生成DB类代码 
      * @param tableName
      * @throws Exception 
      */  
-    public void generateTablesClass() throws Exception {
+    public void generateDatabaseClass() throws Exception {
     	
 		List tables = schema.getTables();
 		for (int i=0; i<tables.size(); i++) {
@@ -219,7 +219,7 @@ public class CodeBuilder {
 	    model.put("tables", tables);
 		
 	    // 生成文件的路径
-	    String fileName = "Tables.java";
+	    String fileName = "DB.java";
         String path = new java.io.File(".").getCanonicalPath();        
         path += "/src/main/java/com/agile/modules/database/";
 	    File outputFile = new File(path + fileName);
@@ -228,7 +228,7 @@ public class CodeBuilder {
 	    // 根据模板生成代码
 	    FileOutputStream outputStream = new FileOutputStream(outputFile);
 	    Writer writer = new OutputStreamWriter(outputStream, "UTF-8");
-	    templateTables.process(model, writer);
+	    templateDatabase.process(model, writer);
 	    writer.flush(); 
 	    writer.close(); 
     }  
@@ -333,7 +333,7 @@ public class CodeBuilder {
 	    writer.close();
 	    
 	    // 合并生成的代码	    
-	    String classFileName = path + className + "Dao.java";
+	    String classFileName = path + "/" + className + "Dao.java";
 	    System.out.println("Dao interface: " + classFileName);
 	    mergeJavaFile(classFileName, tempFileName);
 	    tempFile.delete();
@@ -548,8 +548,8 @@ public class CodeBuilder {
      */      
     public void generateAll() {
     	try {
-    		// 生成Tables.java类
-    		generateTablesClass();
+    		// 生成DB.java类
+    		generateDatabaseClass();
     		
     		// 生产各个表相应的类
 			List tables = schema.getTables();

@@ -5,21 +5,18 @@
 
 package com.agile.validator;
 
-import com.agile.framework.validate.AbstractValidator;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.Errors;
+import com.agile.common.BaseValidator;
 
 import com.agile.model.Permission;
 
 @Repository("permissionValidator")
-public class PermissionValidator extends AbstractValidator<Permission> {
-
-    public PermissionValidator() {
-    }
-
+public class PermissionValidator extends BaseValidator<Permission> {
+   
     @Override
     public boolean supports(Class<?> clazz) {
-    return Permission.class.equals(clazz);
+    	return Permission.class.equals(clazz);
     }
 
     @Override

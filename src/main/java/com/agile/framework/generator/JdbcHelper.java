@@ -7,10 +7,10 @@ import java.sql.DriverManager;
 
 public class JdbcHelper {
 	
-    private static final String driverClass = PropertiesHelper.getValueByKey("driverClassName");  
-    private static final String connectionUrl = PropertiesHelper.getValueByKey("jdbc_url");  
-    private static final String username = PropertiesHelper.getValueByKey("jdbc_username");  
-    private static final String password = PropertiesHelper.getValueByKey("jdbc_password");
+    private static final String driverClass = PropertiesHelper.getValueByKey("jdbc.driver");  
+    private static final String connectionUrl = PropertiesHelper.getValueByKey("jdbc.url");  
+    private static final String username = PropertiesHelper.getValueByKey("jdbc.username");  
+    private static final String password = PropertiesHelper.getValueByKey("jdbc.password");
       
     private static JdbcHelper instance = null;
     

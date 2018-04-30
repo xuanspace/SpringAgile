@@ -30,6 +30,7 @@ public class UserDetail extends BaseEntity {
 	private String avatar;
 	private String sex;
 	private Date birthday;
+	private String address;
 
 	public UserDetail() {
 	
@@ -41,7 +42,7 @@ public class UserDetail extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getId(){
 		return id;
 	}
@@ -50,7 +51,7 @@ public class UserDetail extends BaseEntity {
 		this.id = id;
 	}
     
-    @Column(name = "user_id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="user_id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getUserId(){
 		return userId;
 	}
@@ -59,7 +60,7 @@ public class UserDetail extends BaseEntity {
 		this.userId = userId;
 	}
     
-    @Column(name = "org_id", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="org_id", columnDefinition="int", nullable = true, length = 10)
 	public Integer getOrgId(){
 		return orgId;
 	}
@@ -68,7 +69,7 @@ public class UserDetail extends BaseEntity {
 		this.orgId = orgId;
 	}
     
-    @Column(name = "group_id", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="group_id", columnDefinition="int", nullable = true, length = 10)
 	public Integer getGroupId(){
 		return groupId;
 	}
@@ -77,7 +78,7 @@ public class UserDetail extends BaseEntity {
 		this.groupId = groupId;
 	}
     
-    @Column(name = "nick", columnDefinition="varchar", nullable = true, length = 255)
+    @Column(name="nick", columnDefinition="varchar", nullable = true, length = 255)
 	public String getNick(){
 		return nick;
 	}
@@ -86,7 +87,7 @@ public class UserDetail extends BaseEntity {
 		this.nick = nick;
 	}
     
-    @Column(name = "ename", columnDefinition="varchar", nullable = true, length = 255)
+    @Column(name="ename", columnDefinition="varchar", nullable = true, length = 255)
 	public String getEname(){
 		return ename;
 	}
@@ -95,7 +96,7 @@ public class UserDetail extends BaseEntity {
 		this.ename = ename;
 	}
     
-    @Column(name = "avatar", columnDefinition="varchar", nullable = true, length = 255)
+    @Column(name="avatar", columnDefinition="varchar", nullable = true, length = 255)
 	public String getAvatar(){
 		return avatar;
 	}
@@ -104,7 +105,7 @@ public class UserDetail extends BaseEntity {
 		this.avatar = avatar;
 	}
     
-    @Column(name = "sex", columnDefinition="varchar", nullable = true, length = 1)
+    @Column(name="sex", columnDefinition="varchar", nullable = true, length = 1)
 	public String getSex(){
 		return sex;
 	}
@@ -113,12 +114,21 @@ public class UserDetail extends BaseEntity {
 		this.sex = sex;
 	}
     
-    @Column(name = "birthday", columnDefinition="datetime", nullable = true, length = 19)
+    @Column(name="birthday", columnDefinition="datetime", nullable = true, length = 19)
 	public Date getBirthday(){
 		return birthday;
 	}
 
 	public void setBirthday(Date birthday){
 		this.birthday = birthday;
+	}
+    
+    @Column(name="address", columnDefinition="varchar", nullable = true, length = 255)
+	public String getAddress(){
+		return address;
+	}
+
+	public void setAddress(String address){
+		this.address = address;
 	}
 }

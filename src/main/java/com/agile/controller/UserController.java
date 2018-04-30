@@ -4,11 +4,17 @@
  */
 package com.agile.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.agile.model.User;
+import com.agile.service.interfaces.ConstraintService;
 import com.agile.service.interfaces.UserService;
 import com.agile.validator.UserValidator;
 import com.agile.framework.controller.AbstractDaoController;
@@ -19,7 +25,7 @@ public class UserController extends AbstractDaoController<User>{
 	
 	private UserService userService;
 	private UserValidator userValidate;
-
+	
 	@Autowired
 	public UserController(UserService service, UserValidator validator) {
 		super(service, validator);

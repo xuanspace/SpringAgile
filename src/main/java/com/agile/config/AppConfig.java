@@ -10,8 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 
 @Configuration
-//@ImportResource("classpath:application.xml")
-@ImportResource({"classpath:spring-mvc.xml", "spring-hibernate.xml"})
+@ImportResource({"classpath:spring-mvc.xml", "spring-hibernate.xml", "spring-database.xml"})
 public class AppConfig {
 	
     @Bean  

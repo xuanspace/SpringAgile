@@ -30,9 +30,9 @@ public class Area extends BaseEntity {
 	private String code;
 	private Short type;
 	private String createBy;
-	private Date createDate;
+	private Date createTime;
 	private String updateBy;
-	private Date updateDate;
+	private Date updateTime;
 	private String deleted;
 
 	public Area() {
@@ -45,7 +45,7 @@ public class Area extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getId(){
 		return id;
 	}
@@ -54,7 +54,7 @@ public class Area extends BaseEntity {
 		this.id = id;
 	}
     
-    @Column(name = "parent_id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="parent_id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getParentId(){
 		return parentId;
 	}
@@ -63,7 +63,7 @@ public class Area extends BaseEntity {
 		this.parentId = parentId;
 	}
     
-    @Column(name = "name", columnDefinition="varchar", nullable = false, length = 100)
+    @Column(name="name", columnDefinition="varchar", nullable = false, length = 100)
 	public String getName(){
 		return name;
 	}
@@ -72,7 +72,7 @@ public class Area extends BaseEntity {
 		this.name = name;
 	}
     
-    @Column(name = "description", columnDefinition="varchar", nullable = true, length = 255)
+    @Column(name="description", columnDefinition="varchar", nullable = true, length = 255)
 	public String getDescription(){
 		return description;
 	}
@@ -81,7 +81,7 @@ public class Area extends BaseEntity {
 		this.description = description;
 	}
     
-    @Column(name = "path", columnDefinition="varchar", nullable = false, length = 255)
+    @Column(name="path", columnDefinition="varchar", nullable = false, length = 255)
 	public String getPath(){
 		return path;
 	}
@@ -90,7 +90,7 @@ public class Area extends BaseEntity {
 		this.path = path;
 	}
     
-    @Column(name = "sort", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="sort", columnDefinition="int", nullable = true, length = 10)
 	public Integer getSort(){
 		return sort;
 	}
@@ -99,7 +99,7 @@ public class Area extends BaseEntity {
 		this.sort = sort;
 	}
     
-    @Column(name = "code", columnDefinition="varchar", nullable = true, length = 100)
+    @Column(name="code", columnDefinition="varchar", nullable = true, length = 50)
 	public String getCode(){
 		return code;
 	}
@@ -108,7 +108,7 @@ public class Area extends BaseEntity {
 		this.code = code;
 	}
     
-    @Column(name = "type", columnDefinition="tinyint", nullable = true, length = 3)
+    @Column(name="type", columnDefinition="tinyint", nullable = true, length = 3)
 	public Short getType(){
 		return type;
 	}
@@ -117,7 +117,7 @@ public class Area extends BaseEntity {
 		this.type = type;
 	}
     
-    @Column(name = "create_by", columnDefinition="varchar", nullable = false, length = 64)
+    @Column(name="create_by", columnDefinition="varchar", nullable = false, length = 20)
 	public String getCreateBy(){
 		return createBy;
 	}
@@ -126,16 +126,16 @@ public class Area extends BaseEntity {
 		this.createBy = createBy;
 	}
     
-    @Column(name = "create_date", columnDefinition="datetime", nullable = false, length = 19)
-	public Date getCreateDate(){
-		return createDate;
+    @Column(name="create_time", columnDefinition="datetime", nullable = false, length = 19)
+	public Date getCreateTime(){
+		return createTime;
 	}
 
-	public void setCreateDate(Date createDate){
-		this.createDate = createDate;
+	public void setCreateTime(Date createTime){
+		this.createTime = createTime;
 	}
     
-    @Column(name = "update_by", columnDefinition="varchar", nullable = false, length = 64)
+    @Column(name="update_by", columnDefinition="varchar", nullable = false, length = 20)
 	public String getUpdateBy(){
 		return updateBy;
 	}
@@ -144,16 +144,16 @@ public class Area extends BaseEntity {
 		this.updateBy = updateBy;
 	}
     
-    @Column(name = "update_date", columnDefinition="datetime", nullable = false, length = 19)
-	public Date getUpdateDate(){
-		return updateDate;
+    @Column(name="update_time", columnDefinition="datetime", nullable = false, length = 19)
+	public Date getUpdateTime(){
+		return updateTime;
 	}
 
-	public void setUpdateDate(Date updateDate){
-		this.updateDate = updateDate;
+	public void setUpdateTime(Date updateTime){
+		this.updateTime = updateTime;
 	}
     
-    @Column(name = "deleted", columnDefinition="char", nullable = false, length = 1)
+    @Column(name="deleted", columnDefinition="char", nullable = false, length = 1)
 	public String getDeleted(){
 		return deleted;
 	}

@@ -24,10 +24,12 @@ public class Role extends BaseEntity {
 	private Integer id;
 	private String name;
 	private String description;
+	private String code;
+	private Integer sort;
 	private String createBy;
-	private Date createDate;
-	private Date updateDate;
+	private Date createTime;
 	private String updateBy;
+	private Date updateTime;
 	private String deleted;
 
 	public Role() {
@@ -40,7 +42,7 @@ public class Role extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getId(){
 		return id;
 	}
@@ -49,7 +51,7 @@ public class Role extends BaseEntity {
 		this.id = id;
 	}
     
-    @Column(name = "name", columnDefinition="varchar", nullable = true, length = 50)
+    @Column(name="name", columnDefinition="varchar", nullable = true, length = 50)
 	public String getName(){
 		return name;
 	}
@@ -58,7 +60,7 @@ public class Role extends BaseEntity {
 		this.name = name;
 	}
     
-    @Column(name = "description", columnDefinition="varchar", nullable = true, length = 255)
+    @Column(name="description", columnDefinition="varchar", nullable = true, length = 255)
 	public String getDescription(){
 		return description;
 	}
@@ -67,7 +69,25 @@ public class Role extends BaseEntity {
 		this.description = description;
 	}
     
-    @Column(name = "create_by", columnDefinition="varchar", nullable = false, length = 64)
+    @Column(name="code", columnDefinition="varchar", nullable = true, length = 20)
+	public String getCode(){
+		return code;
+	}
+
+	public void setCode(String code){
+		this.code = code;
+	}
+    
+    @Column(name="sort", columnDefinition="int", nullable = true, length = 10)
+	public Integer getSort(){
+		return sort;
+	}
+
+	public void setSort(Integer sort){
+		this.sort = sort;
+	}
+    
+    @Column(name="create_by", columnDefinition="varchar", nullable = false, length = 50)
 	public String getCreateBy(){
 		return createBy;
 	}
@@ -76,25 +96,16 @@ public class Role extends BaseEntity {
 		this.createBy = createBy;
 	}
     
-    @Column(name = "create_date", columnDefinition="datetime", nullable = false, length = 19)
-	public Date getCreateDate(){
-		return createDate;
+    @Column(name="create_time", columnDefinition="datetime", nullable = false, length = 19)
+	public Date getCreateTime(){
+		return createTime;
 	}
 
-	public void setCreateDate(Date createDate){
-		this.createDate = createDate;
+	public void setCreateTime(Date createTime){
+		this.createTime = createTime;
 	}
     
-    @Column(name = "update_date", columnDefinition="datetime", nullable = false, length = 19)
-	public Date getUpdateDate(){
-		return updateDate;
-	}
-
-	public void setUpdateDate(Date updateDate){
-		this.updateDate = updateDate;
-	}
-    
-    @Column(name = "update_by", columnDefinition="varchar", nullable = false, length = 64)
+    @Column(name="update_by", columnDefinition="varchar", nullable = false, length = 50)
 	public String getUpdateBy(){
 		return updateBy;
 	}
@@ -103,7 +114,16 @@ public class Role extends BaseEntity {
 		this.updateBy = updateBy;
 	}
     
-    @Column(name = "deleted", columnDefinition="char", nullable = false, length = 1)
+    @Column(name="update_time", columnDefinition="datetime", nullable = false, length = 19)
+	public Date getUpdateTime(){
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime){
+		this.updateTime = updateTime;
+	}
+    
+    @Column(name="deleted", columnDefinition="char", nullable = false, length = 1)
 	public String getDeleted(){
 		return deleted;
 	}

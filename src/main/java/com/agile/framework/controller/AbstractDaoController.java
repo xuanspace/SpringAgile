@@ -116,7 +116,7 @@ public abstract class AbstractDaoController<T> extends AbstractController {
     }
 
     /**
-     * 返回参数T的类主键类型
+     * 返回参数T的主键ID类型
      * @return the entity class
      */        
 	public Class<?> getEntityIdClass() {
@@ -150,7 +150,7 @@ public abstract class AbstractDaoController<T> extends AbstractController {
             //Class<?> clazz = getValidtor().getEntityAssist().getTypeClass();
             Class<?> clazz = getEntityClass();
             entity = (T) EntityUtils.toBean(map, clazz);
-            daoValidator.validateEntity(entity);
+            daoValidator.validate(entity);
         }
         return entity;
     }
@@ -166,7 +166,7 @@ public abstract class AbstractDaoController<T> extends AbstractController {
      * @return T 实体对象
      */    
 	@ResponseBody
-    @RequestMapping(value="{id:[0-1]+}", method=RequestMethod.GET,produces={"application/json;charset=UTF-8"})
+    @RequestMapping(value="{id:[0-9]+}", method=RequestMethod.GET,produces={"application/json;charset=UTF-8"})
     public AjaxResult get(HttpServletRequest request) throws Exception {
 		AjaxResult result = new AjaxResult();
         RestParameter params = new RestParameter(request);

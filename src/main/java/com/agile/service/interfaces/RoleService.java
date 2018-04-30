@@ -9,4 +9,10 @@ import com.agile.framework.service.IDaoService;
 
 public interface RoleService extends IDaoService<Role> {
 
+    /**
+     * 根据角色名户名获取角色
+     * @param name 角色名
+     * @return 角色实例
+     */
+	public Role getRoleByName(String name);
 }

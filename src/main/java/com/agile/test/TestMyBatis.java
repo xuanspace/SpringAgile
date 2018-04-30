@@ -1,6 +1,6 @@
 package com.agile.test;
 
-import com.agile.dao.interfaces.UserDao2;
+//import com.agile.dao.interfaces.UserDao2;
 import com.agile.dao.mybatis.UserDaoImpl;
 import com.agile.model.User;
 import org.apache.ibatis.io.Resources;
@@ -44,10 +44,10 @@ public class TestMyBatis {
         SqlSession session = sqlSessionFactory.openSession();
         try {
             User user4 = (User) session.selectOne("com.agile.dao.mybatis.UserMapper.get", 10);
-        	UserDao2 userOperation=session.getMapper(UserDao2.class);
-            User uu = userOperation.test();
+        	//UserDao2 userOperation=session.getMapper(UserDao2.class);
+            //User uu = userOperation.test();
 
-            User u2 = userOperation.get(10);
+            //User u2 = userOperation.get(10);
             //UserDaoImpl userDao = new UserDaoImpl();
             //userDao.setSessionFactory(sqlSessionFactory);
             //User u = userDao.get(10);

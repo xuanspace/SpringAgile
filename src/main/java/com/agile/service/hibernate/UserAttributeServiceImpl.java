@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.agile.dao.interfaces.UserAttributeDao;
 import com.agile.model.UserAttribute;
+import com.agile.dao.interfaces.UserAttributeDao;
 import com.agile.service.interfaces.UserAttributeService;
 import com.agile.framework.persistence.IBaseDao;
 import com.agile.framework.service.AbstractDaoService;

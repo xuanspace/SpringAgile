@@ -23,8 +23,7 @@ public class UserContact extends BaseEntity {
 	private Integer id;
 	private Integer userId;
 	private Integer type;
-	private String tool;
-	private String number;
+	private String information;
 
 	public UserContact() {
 	
@@ -36,7 +35,7 @@ public class UserContact extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getId(){
 		return id;
 	}
@@ -45,7 +44,7 @@ public class UserContact extends BaseEntity {
 		this.id = id;
 	}
     
-    @Column(name = "user_id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="user_id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getUserId(){
 		return userId;
 	}
@@ -54,7 +53,7 @@ public class UserContact extends BaseEntity {
 		this.userId = userId;
 	}
     
-    @Column(name = "type", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="type", columnDefinition="int", nullable = true, length = 10)
 	public Integer getType(){
 		return type;
 	}
@@ -63,21 +62,12 @@ public class UserContact extends BaseEntity {
 		this.type = type;
 	}
     
-    @Column(name = "tool", columnDefinition="varchar", nullable = true, length = 64)
-	public String getTool(){
-		return tool;
+    @Column(name="information", columnDefinition="varchar", nullable = true, length = 64)
+	public String getInformation(){
+		return information;
 	}
 
-	public void setTool(String tool){
-		this.tool = tool;
-	}
-    
-    @Column(name = "number", columnDefinition="varchar", nullable = true, length = 64)
-	public String getNumber(){
-		return number;
-	}
-
-	public void setNumber(String number){
-		this.number = number;
+	public void setInformation(String information){
+		this.information = information;
 	}
 }

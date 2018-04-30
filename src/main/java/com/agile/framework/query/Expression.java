@@ -2,8 +2,6 @@ package com.agile.framework.query;
 
 import java.util.Date;
 
-import static com.agile.framework.query.Words.isReservedWord;
-
 /**
  * 查询条件类
  * @author linweixuan@gmail.com
@@ -14,20 +12,127 @@ public class Expression {
 
 	private Object left;
 	
-	private String operator;
+	private Object operator;
 	
 	private Object right;
+	
+	private String clause;
 	
 	public Expression() {
 		this.left = null;
 		this.operator = null;
 		this.right = null;
+		this.clause = "";
 	}
 
-	public Expression(Object left, String operator, Object right) {
-		this.right = right;
-		this.operator = operator;
-		this.right = right;
+    /**
+     * SELECT TABLE表达式转为字符串
+     * 如: build.select(DB.SYS_USER)
+     * 
+     * @return 表达式字符串
+     */	
+	public String toTableSelectString() {
+		String str = right.toString();
+		str += ".*";
+		return str;
+	}
+	
+    /**
+     * JOIN表达式转为字符串
+     * 如: build.join(SYS_USER_ROLE.USER_ID).on(SYS_USER.ID)
+     * 
+     * @return 表达式字符串
+     */	
+	public String toJoinString() {
+		String str = "left join ";
+		SQLField<?> field1 = (SQLField<?>)right;
+		str += field1.getTable();
+		str += " on ";
+
+		SQLField<?> field2 = (SQLField<?>)left;
+		str += field2.getTable();
+		str += ".";
+		str += field2.getName();		
+		str += " = ";
+		
+		str += field1.getTable();
+		str += ".";
+		str += field1.getName();
+		
+		return str;
+	}
+
+    /**
+     * 常规表达式转为字符串
+     * 
+     * @return 表达式字符串
+     */	
+	public String toNomalString() {
+		String str = "";
+		if (left != null) {
+			str += left.toString();
+		}
+		if (operator!= null) {
+			if (operator.equals(SQL.COMMA))
+				str += operator.toString();
+			else
+				str += " " + operator.toString();
+		}
+		if (right != null) {
+			str += getRightString();
+		}
+		return str;		
+	}
+
+    /**
+     * 判断对象是不是String/Data类型
+     * @return String/Data类型返回true
+     */	
+	public boolean isStringType(Object object) {
+		Class<?> clazz = object.getClass();
+		// 字符串对象
+        if (String.class.equals(clazz))
+        	return true;
+        // 日期对象
+        else if (Date.class.equals(clazz))
+        	return true;
+        return false;
+	}
+	
+    /**
+     * 表达式右边对象转为字符串
+     * 
+     * @return 表达式字符串
+     */	
+	public String getRightString() {
+		String str = "";
+		// AS后面的字符串不需要''
+		if (operator != null && operator.equals(SQL.AS)) {
+			str += " " + right.toString();
+		}else if (isStringType(right)) {	
+			str += " '" + right.toString() + "'";
+		}else {
+			str += " " + right.toString();
+		}
+		return str;
+	}
+
+    /**
+     * 表达式转为字符串
+     * 
+     * @return 表达式字符串
+     */	
+	public String toString() {
+		// JOIN表达式
+		if (operator!= null) {
+			if (operator.equals(SQL.LEFT_JOIN)) {
+				return toJoinString();
+			}else if (operator.equals(SQL.SELECT_TABLE)) {
+				return toTableSelectString();				
+			}
+		}
+		// 常规表达式
+		return toNomalString();
 	}
 	
 	public Object getLeft() {
@@ -38,11 +143,15 @@ public class Expression {
 		this.left = left;
 	}
 
-	public String getOperator() {
+	public Object getOperator() {
 		return operator;
 	}
 
 	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+	
+	public void setOperator(SQL operator) {
 		this.operator = operator;
 	}
 
@@ -52,50 +161,13 @@ public class Expression {
 
 	public void setRight(Object right) {
 		this.right = right;
-	}	
+	}
 
-	private String getString(Object object) {
-		String str = "";
-		if (object instanceof Table) {
-			Table table = (Table)object;
-			str += " " + table.getName();
-		}
-		else if (object instanceof Tuple) {
-			Tuple tuple = (Tuple)object;
-			str += " " + tuple.toString();
-		}
-		else{
-			Class<?> clazz = object.getClass();
-	        if (String.class.equals(clazz)) {
-	        	if (isReservedWord(object.toString())){
-					str += " " + object;
-				}
-				else{
-					str += " '" + object + "'";
-				}
-	        }
-	        else if (Date.class.equals(clazz)) {
-	        	Date date = (Date)object;
-	        	str += " '" + date.toString() + "'";
-	        }
-	        else{
-				str += " " + object.toString();
-			}
-		}
-		return str;
+	public String getClause() {
+		return clause;
 	}
-	
-	public String toString() {
-		String str = "";
-		if (left != null) {
-			str += getString(left);				
-		}
-		if (operator!= null) {
-			str += " " + operator;
-		}
-		if (right != null) {
-			str += getString(right);
-		}
-		return str;
-	}
+
+	public void setClause(String clause) {
+		this.clause = clause;
+	}	
 }

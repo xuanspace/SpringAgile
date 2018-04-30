@@ -57,6 +57,7 @@ public class EntityAssist {
             String className = annotationClazz.getName();
             return attribute.getAnnotation(className);
         }catch (Exception e) {
+        	e.printStackTrace();
         }
         return null;
     }

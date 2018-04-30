@@ -15,13 +15,13 @@ package com.agile.modules.database;
 import java.util.Date;
 </#if>
 
-import com.agile.framework.query.Field;
-import com.agile.framework.query.Table;
+import com.agile.framework.query.SQLField;
+import com.agile.framework.query.SQLTable;
 
-public class ${tableName?upper_case} extends Table {
+public class ${tableName?upper_case} extends SQLTable {
 
 	<#list columns as column>
-	public final static Field<${column.javaType.simpleName}> ${column.name?upper_case} = new Field<${column.javaType.simpleName}>("${column.name?lower_case}"); 
+	public final static SQLField<${column.javaType.simpleName}> ${column.name?upper_case} = new SQLField<${column.javaType.simpleName}>("${tableName}", "${column.name?lower_case}"); 
 	</#list>
 
 	@Override
@@ -33,4 +33,16 @@ public class ${tableName?upper_case} extends Table {
 	public String getComment() {
 		return null;
 	}
+	
+	@Override
+	public String toString() {
+	    return "${tableName}";
+    }
+	
+	public SQLField<?>[] getFileds() {
+		SQLField<?>[] fields = {
+			<#list columns as column>${column.name?upper_case},</#list>
+		}; 
+		return fields;
+	}	
 }

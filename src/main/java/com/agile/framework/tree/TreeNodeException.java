@@ -11,7 +11,7 @@ package com.agile.framework.tree;
  */
 public class TreeNodeException extends RuntimeException {
 
-	private static final long serialVersionUID = 7555390015603663828L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructs a new tree node exception with the specified detail message

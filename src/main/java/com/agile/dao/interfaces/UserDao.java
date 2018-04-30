@@ -9,6 +9,4 @@ import com.agile.framework.persistence.IBaseDao;
 
 public interface UserDao extends IBaseDao<User>{
 
-    //public User test();
-
 }

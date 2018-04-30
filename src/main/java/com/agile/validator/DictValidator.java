@@ -5,21 +5,18 @@
 
 package com.agile.validator;
 
-import com.agile.framework.validate.AbstractValidator;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.Errors;
+import com.agile.common.BaseValidator;
 
 import com.agile.model.Dict;
 
 @Repository("dictValidator")
-public class DictValidator extends AbstractValidator<Dict> {
-
-    public DictValidator() {
-    }
-
+public class DictValidator extends BaseValidator<Dict> {
+   
     @Override
     public boolean supports(Class<?> clazz) {
-    return Dict.class.equals(clazz);
+    	return Dict.class.equals(clazz);
     }
 
     @Override

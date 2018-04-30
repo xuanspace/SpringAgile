@@ -24,6 +24,7 @@ public class OrgRole extends BaseEntity {
 	private Integer orgId;
 	private Integer roleId;
 	private String description;
+	private String deleted;
 
 	public OrgRole() {
 	
@@ -35,7 +36,7 @@ public class OrgRole extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getId(){
 		return id;
 	}
@@ -44,7 +45,7 @@ public class OrgRole extends BaseEntity {
 		this.id = id;
 	}
     
-    @Column(name = "org_id", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="org_id", columnDefinition="int", nullable = true, length = 10)
 	public Integer getOrgId(){
 		return orgId;
 	}
@@ -53,7 +54,7 @@ public class OrgRole extends BaseEntity {
 		this.orgId = orgId;
 	}
     
-    @Column(name = "role_id", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="role_id", columnDefinition="int", nullable = true, length = 10)
 	public Integer getRoleId(){
 		return roleId;
 	}
@@ -62,12 +63,21 @@ public class OrgRole extends BaseEntity {
 		this.roleId = roleId;
 	}
     
-    @Column(name = "description", columnDefinition="varchar", nullable = true, length = 255)
+    @Column(name="description", columnDefinition="varchar", nullable = true, length = 255)
 	public String getDescription(){
 		return description;
 	}
 
 	public void setDescription(String description){
 		this.description = description;
+	}
+    
+    @Column(name="deleted", columnDefinition="char", nullable = true, length = 1)
+	public String getDeleted(){
+		return deleted;
+	}
+
+	public void setDeleted(String deleted){
+		this.deleted = deleted;
 	}
 }

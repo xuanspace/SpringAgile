@@ -5,21 +5,18 @@
 
 package com.agile.validator;
 
-import com.agile.framework.validate.AbstractValidator;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.Errors;
+import com.agile.common.BaseValidator;
 
 import com.agile.model.Organization;
 
 @Repository("organizationValidator")
-public class OrganizationValidator extends AbstractValidator<Organization> {
-
-    public OrganizationValidator() {
-    }
-
+public class OrganizationValidator extends BaseValidator<Organization> {
+   
     @Override
     public boolean supports(Class<?> clazz) {
-    return Organization.class.equals(clazz);
+    	return Organization.class.equals(clazz);
     }
 
     @Override

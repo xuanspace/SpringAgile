@@ -195,10 +195,12 @@ public class AbstractHibernateDao<T> implements IBaseDao<T> {
 
 	@Override
 	public List<T> getList(Builder builder) {
-		String sql = builder.toSql(false);
-        Query query = this.getSession().createSQLQuery(sql);
-        query.setFirstResult(builder.getOffset())
-             .setMaxResults(builder.getLimit());
+		String sql = builder.toNoPageSql();
+        Query query = this.getSession().createSQLQuery(sql);        
+        if (builder.getOffset() != null)
+            query.setFirstResult(builder.getOffset());
+        if (builder.getLimit() != null)
+            query.setMaxResults(builder.getLimit());
         return query.list(); 
 	}
 
@@ -206,7 +208,7 @@ public class AbstractHibernateDao<T> implements IBaseDao<T> {
 	public List<?> query(Builder builder) {
     	try {
 			if (builder.isHql()) {
-                String hql = builder.toHql(false);
+                String hql = builder.toNoPageHql();
                 Query query = this.getSession().createQuery(hql);
                 if (builder.getOffset() != null)
                     query.setFirstResult(builder.getOffset());
@@ -215,10 +217,13 @@ public class AbstractHibernateDao<T> implements IBaseDao<T> {
                 return query.list();
 			}
 			else {
-                String sql = builder.toSql(false);
+                String sql = builder.toNoPageSql();
                 SQLQuery query = this.getSession().createSQLQuery(sql);
-                if (builder.getEntityClass() != null)
+                if (builder.getResultClass() != null) {
+                	query.addEntity(builder.getResultClass());
+                }else if (builder.getEntityClass() != null) {
                     query.addEntity(builder.getEntityClass());
+                }
                 if (builder.getOffset() != null)
                     query.setFirstResult(builder.getOffset());
                 if (builder.getLimit() != null)

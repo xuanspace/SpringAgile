@@ -26,8 +26,8 @@ import java.util.Map;
  * SpringWeb App启动初始化
  *
  * AppInitializer自动加载无需配置
- *   如果存在web.xml,通过web.xml配置文件初始化
- *   如果不存在web.xml,通过代码方式实现无web.xml配置
+ *   1.如果存在web.xml,通过web.xml配置文件初始化
+ *   2.如果不存在web.xml,通过代码方式实现无web.xml配置
  *
  */
 public class AppInitializer implements WebApplicationInitializer {
@@ -49,7 +49,7 @@ public class AppInitializer implements WebApplicationInitializer {
      * 服务器启动调用onStartup()初始化系统
      *
      * @param servletContext
-     *
+     * @throws ServletException
      */
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
@@ -72,7 +72,7 @@ public class AppInitializer implements WebApplicationInitializer {
 
     /**
      * 通过Xml来配置应用
-     *
+     * @param locations
      * @return
      */
     private XmlWebApplicationContext createAppContext(String... locations) {

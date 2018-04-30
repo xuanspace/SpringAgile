@@ -5,15 +5,16 @@
 package com.agile.modules.database;
 
 
-import com.agile.framework.query.Field;
-import com.agile.framework.query.Table;
+import com.agile.framework.query.SQLField;
+import com.agile.framework.query.SQLTable;
 
-public class SYS_ORG_ROLE extends Table {
+public class SYS_ORG_ROLE extends SQLTable {
 
-	public final static Field<Integer> ID = new Field<Integer>("id"); 
-	public final static Field<Integer> ORG_ID = new Field<Integer>("org_id"); 
-	public final static Field<Integer> ROLE_ID = new Field<Integer>("role_id"); 
-	public final static Field<String> DESCRIPTION = new Field<String>("description"); 
+	public final static SQLField<Integer> ID = new SQLField<Integer>("sys_org_role", "id"); 
+	public final static SQLField<Integer> ORG_ID = new SQLField<Integer>("sys_org_role", "org_id"); 
+	public final static SQLField<Integer> ROLE_ID = new SQLField<Integer>("sys_org_role", "role_id"); 
+	public final static SQLField<String> DESCRIPTION = new SQLField<String>("sys_org_role", "description"); 
+	public final static SQLField<String> DELETED = new SQLField<String>("sys_org_role", "deleted"); 
 
 	@Override
 	public String getName() {
@@ -24,4 +25,16 @@ public class SYS_ORG_ROLE extends Table {
 	public String getComment() {
 		return null;
 	}
+	
+	@Override
+	public String toString() {
+	    return "sys_org_role";
+    }
+	
+	public SQLField<?>[] getFileds() {
+		SQLField<?>[] fields = {
+			ID,ORG_ID,ROLE_ID,DESCRIPTION,DELETED,
+		}; 
+		return fields;
+	}	
 }

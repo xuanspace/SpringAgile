@@ -9,4 +9,11 @@ import com.agile.framework.service.IDaoService;
 
 public interface UserService extends IDaoService<User> {
 
+    /**
+     * 根据用户名获取用户
+     * @param name 用户名
+     * @return 用户实例
+     */
+	public User getUserByName(String name);
+	
 }

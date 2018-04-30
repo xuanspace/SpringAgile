@@ -5,12 +5,14 @@
 package com.agile.modules.database;
 
 
-import com.agile.framework.query.Field;
-import com.agile.framework.query.Table;
+import com.agile.framework.query.SQLField;
+import com.agile.framework.query.SQLTable;
 
-public class SYS_OPERATION extends Table {
+public class SYS_OPERATION extends SQLTable {
 
-	public final static Field<Integer> ID = new Field<Integer>("id"); 
+	public final static SQLField<Integer> ID = new SQLField<Integer>("sys_operation", "id"); 
+	public final static SQLField<String> NAME = new SQLField<String>("sys_operation", "name"); 
+	public final static SQLField<String> DESCRIPTION = new SQLField<String>("sys_operation", "description"); 
 
 	@Override
 	public String getName() {
@@ -21,4 +23,16 @@ public class SYS_OPERATION extends Table {
 	public String getComment() {
 		return null;
 	}
+	
+	@Override
+	public String toString() {
+	    return "sys_operation";
+    }
+	
+	public SQLField<?>[] getFileds() {
+		SQLField<?>[] fields = {
+			ID,NAME,DESCRIPTION,
+		}; 
+		return fields;
+	}	
 }

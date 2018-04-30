@@ -4,9 +4,21 @@
  */
 package com.agile.service.interfaces;
 
+import com.agile.model.Role;
+import com.agile.model.User;
 import com.agile.model.UserRole;
+
+import java.util.List;
+
 import com.agile.framework.service.IDaoService;
 
 public interface UserRoleService extends IDaoService<UserRole> {
 
+    /**
+     * 获取用户的角色
+     * @param user 用户
+     * @return 用户角色
+     */
+	public List<Role> getUserRoles(User user);
+	
 }

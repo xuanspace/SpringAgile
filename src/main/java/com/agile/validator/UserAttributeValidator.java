@@ -5,21 +5,18 @@
 
 package com.agile.validator;
 
-import com.agile.framework.validate.AbstractValidator;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.Errors;
+import com.agile.common.BaseValidator;
 
 import com.agile.model.UserAttribute;
 
 @Repository("userAttributeValidator")
-public class UserAttributeValidator extends AbstractValidator<UserAttribute> {
-
-    public UserAttributeValidator() {
-    }
-
+public class UserAttributeValidator extends BaseValidator<UserAttribute> {
+   
     @Override
     public boolean supports(Class<?> clazz) {
-    return UserAttribute.class.equals(clazz);
+    	return UserAttribute.class.equals(clazz);
     }
 
     @Override

@@ -1,156 +1,315 @@
 package com.agile.framework.query;
 
 import java.util.*;
-
 import com.agile.framework.persistence.IBaseDao;
-import com.agile.framework.utils.EntityUtils;
 
 /**
  * 操作表达式类
+ *  SELECT
+ *   [ALL | DISTINCT | DISTINCTROW ]
+ *   select_expr [, select_expr ...]
+ *   [FROM table_references
+ *     [PARTITION partition_list]
+ *   [WHERE where_condition]
+ *   [GROUP BY {col_name | expr | position}
+ *     [ASC | DESC], ... [WITH ROLLUP]]
+ *   [HAVING where_condition]
+ *   [ORDER BY {col_name | expr | position}
+ *     [ASC | DESC], ...]
+ *   [LIMIT [offset]]
+ *    
  * @author linweixuan@gmail.com
  * @date 2017-02-03
  * @version 1.0 
  */
-public class Builder {
+public class Builder extends SQLBuilder {
 	
-	private Boolean isDefault = true;
+	private Boolean isSelect = false;
+
+	private Boolean isFrom = false;
+	
+	private Boolean isWhere = false;
+
+	private Boolean isUpdate = false;
+	
+	private Boolean isDelete = false;
+
+	private Boolean isPageable = true;
+	
+	private Boolean isPositionParameter = false;
+	
+	private Boolean isNameParameter = false;
 	
 	private Integer limit = null;
 	
 	private Integer offset = null;
 	
-	private List<Expression> expressions = null;
-
-    private IBaseDao<?> baseDao = null;
-
-    private Class<?> entityClass = null;
-    
     private String hql = null;
 
 	private String sql = null;
-    
+	
+    /**
+     * 缺省构造函数
+     */		
 	public Builder() {
-		expressions = new ArrayList<Expression>();
+		creaeteExpressions();
 	}
 
+    /**
+     * 构造函数
+     * @param clazz 实体类Class
+     */		
 	public Builder(Class<?> clazz) {
-		expressions = new ArrayList<Expression>();
-		this.entityClass = clazz;
+		creaeteExpressions();
+		this.entityClass = clazz;		
 	}
 
+    /**
+     * 构造函数
+     * @param dao 实体类对象
+     */		
 	public Builder(IBaseDao<?> dao) {
-		expressions = new ArrayList<Expression>();
+		creaeteExpressions();
 		this.baseDao = dao;
 		if (dao != null) {
 			this.entityClass = dao.getEntityClass();
+		}		
+	}
+
+    /**
+     * Select多个表字段名
+     * 
+     * @param fields 多个字段名
+     * @return 返回from语句对象
+     */		
+	public FromStatement select(String field) {
+		Expression expression = new Expression();
+		FromStatement from = new FromStatement(this);
+		if (isSelect == false) {
+			expression.setOperator(SQL.SELECT);
+			isSelect = true;
+		}else{
+			addSelectOperator(SQL.COMMA);
 		}
+		// 第二次不用添加SELECT
+		expression.setRight(field);
+		addSelect(expression);
+		return from;
 	}
+
+    /**
+     * Select多个表字段
+     * 
+     * @param fields 多个字段对象
+     * @return 返回from语句对象
+     */		
+	public FromStatement select(SQLField<?>... fields) {
+		FromStatement from = new FromStatement(this);
+		if (isSelect == false) {
+			addSelectOperator(SQL.SELECT);
+			isSelect = true;
+		}else{
+			addSelectOperator(SQL.COMMA);
+		}
 		
-	public Where selectFrom(String table) {
-		isDefault = false;
-    	Expression expression = new Expression();
-    	expression.setLeft("select");
-    	expression.setOperator("from");
-    	expression.setRight(table);
-    	expressions.add(expression);
-    	Where where = new Where(this);
-		return where;
-	}
-
-	public Where selectFrom(Table table) {
-		isDefault = false;
-    	Expression expression = new Expression();
-    	expression.setLeft("select");
-    	expression.setOperator("from");
-    	expressions.add(expression);
-        List<Expression> exps = table.getExpressions();
-        expressions.addAll(exps);
-    	Where where = new Where(this);
-		return where;
-	}
-
-	public From select(String fields) {
-		isDefault = false;
-		Expression expression = new Expression();
-		expression.setLeft("select");
-		expression.setOperator("from");
-		expression.setRight(fields);
-		expressions.add(expression);
-		From from = new From(this);
-		return from;
-	}
-
-	public From select(Field<?>... fields) {
-		isDefault = false;
-		Expression expression = new Expression();
-		expression.setLeft("select");
-		expression.setOperator("from");
-		expressions.add(expression);		
-		From from = new From(this);
         for(int i = 0; i < fields.length; i++) {
-    		expressions.addAll(fields[i].getExpressions());
-        }        
+        	List<Expression> exps = fields[i].getExpressions();
+        	if (exps == null) // 单纯字段
+        		addSelectRight(fields[i]);
+        	else
+        		addSelect(exps); // 字段有表达式
+        }
 		return from;
 	}
 
-	public Update update(Table table) {
-		isDefault = false;
+    /**
+     * Select整个表字段
+     * 
+     * @param tables 表对象
+     * @return 返回from语句对象
+     */	
+	public WhereStatement select(SQLTable... tables) {
+		Expression expression = null;				
+		WhereStatement where = new WhereStatement(this);
+		if (isSelect == false) {
+			addSelectOperator(SQL.SELECT);
+			isSelect = true;
+		} else {
+			addSelectOperator(SQL.COMMA);
+		}
+		
+        for(int i = 0; i < tables.length; i++) {
+        	List<Expression> exps = tables[i].getExpressions();
+        	if (exps == null) { // 单纯表
+        		expression = new Expression();
+        		expression.setOperator(SQL.SELECT_TABLE);
+        		expression.setRight(tables[i]);
+        		addSelect(expression);
+        		if (i < tables.length-1) {
+        			addSelectOperator(SQL.COMMA);
+        		}
+        	}else {
+        		addSelect(exps); // 表有表达式
+        	}
+        }
+		return where;
+	}
+
+    /**
+     * From语句
+     * 
+     * @param fields 表名
+     * @return 返回where语句对象
+     */		
+	public WhereStatement from(String table) {
+    	Expression expression = new Expression();
+    	WhereStatement where = new WhereStatement(this);
+		if (isFrom == false) {
+			expression.setOperator(SQL.FROM);
+			isFrom = true;
+		}else {
+			addFromOperator(SQL.COMMA);
+		}
+    	expression.setRight(table);
+    	addFrom(expression);
+		return where;
+	}
+
+    /**
+     * From语句
+     * 
+     * @param table 表对象
+     * @return 返回where语句对象
+     */		
+	public WhereStatement from(SQLTable table) {
+    	WhereStatement where = new WhereStatement(this);
+		if (isFrom == false) {
+			addFromOperator(SQL.FROM);
+			isFrom = true;
+		}else {
+			addFromOperator(SQL.COMMA);
+		}    	
+		// 表是否有表达式
+    	List<Expression> exps = table.getExpressions();
+    	if (exps == null)
+    		addFromRight(table);
+    	else
+    		addFrom(exps);
+		return where;
+	}
+
+    /**
+     * Update语句
+     * 
+     * @param table 表对象
+     * @return 返回update语句对象
+     */		
+	public UpdateStatement update(SQLTable table) {
 		Expression expression = new Expression();
-		expression.setLeft("update");
+		UpdateStatement update = new UpdateStatement(this);
+		if (isUpdate == false) {
+			isUpdate = true;
+		}
+		expression.setOperator(SQL.UPDATE);
 		expression.setRight(table);
-		expressions.add(expression);
-		Update update = new Update(this);
+		add(expression);		
 		return update;
 	}
 
-	public Where delete(Table table) {
-		isDefault = false;
+    /**
+     * Delete语句
+     * 
+     * @param table 表对象
+     * @return 返回delete语句对象
+     */		
+	public WhereStatement delete(SQLTable table) {
 		Expression expression = new Expression();
-		expression.setLeft("delete");
-        expression.setOperator("from");
+		WhereStatement where = new WhereStatement (this);
+		if (isDelete == false) {
+			isDelete = true;
+		}
+        expression.setOperator(SQL.DELETE);
 		expression.setRight(table);
-		expressions.add(expression);
-		Where where = new Where (this);
+		add(expression);		
 		return where ;
 	}
-	
-	public Builder where(Field<?> field) {
-		isDefault = false;
-        Expression expression = new Expression();
-        expression.setOperator("where");
-        expressions.add(expression);
 
-		List<Expression> exps = field.getExpressions();
-		expressions.addAll(exps);
+	/**
+	 * Where条件语句
+	 *  如果删除和更新的where直接放入常规表达式
+	 * @param field 字段对象
+	 * @return 返回builder自己
+	 */	
+	public Builder where(SQLField<?> field) {
+		if (isUpdate || isDelete) {
+			if (isWhere == false) {
+				addOperator(SQL.WHERE);
+				isWhere = true;
+			}else {
+				addOperator(SQL.COMMA);
+			}
+			add(field.getExpressions());
+		} else {
+			if (isWhere == false) {
+				addWhereOperator(SQL.WHERE);
+				isWhere = true;
+			}else {
+				addWhereOperator(SQL.COMMA);
+			}
+			addWhere(field.getExpressions());
+		}
 		return this;
+	}
+
+	/**
+	 * Join语句
+	 * @param field 字段对象
+	 * @return 返回join语句对象
+	 */	
+	public JoinStatement join(SQLField<?> field) {        
+        JoinStatement joinStatement = new JoinStatement(this);
+        Expression expression = new Expression();
+        expression.setLeft(field);
+        expression.setOperator(SQL.LEFT_JOIN);
+        addFrom(expression);
+        addFrom(field.getExpressions());
+		return joinStatement;
 	}
 	
 	public Builder limit(int size) {
 		Expression expression = new Expression();
-		expression.setOperator("limit");
+		expression.setOperator(SQL.LIMIT);
 		expression.setRight(size);
-		expressions.add(expression);
+		this.add(expression);
 		this.limit = size;
 		return this;
 	}
 
 	public Builder offset(int value) {
 		Expression expression = new Expression();
-		expression.setOperator("offset");
+		expression.setOperator(SQL.OFFSET);
 		expression.setRight(value);
-		expressions.add(expression);
+		this.add(expression);
 		this.offset = value;
 		return this;
 	}
 
-	public Builder order(Field<?> field) {
+	public Builder order(SQLField<?> field) {
 		Expression expression = new Expression();
-		expression.setOperator("oder by");
+		expression.setOperator(SQL.ORDER_BY);
 		expression.setRight(field);
-		expressions.add(expression);
+		this.add(expression);
 		return this;
 	}
 
+	public List<?> list() {
+		return this.baseDao.query(this);
+	}
+
+	public long execute() {
+		return this.baseDao.execute(this);
+	}
+	
 	public Builder sql(String sql) {
 		this.sql = sql;
 		return this;
@@ -162,41 +321,100 @@ public class Builder {
 	}
 
 	public boolean isSql() {
-		if (this.sql != null)
-			return true;
-		return false;
+		return (this.sql != null) ? true : false;
 	}
 
 	public boolean isHql() {
-		if (this.hql != null)
-			return true;
-		return false;
+		return (this.hql != null) ? true : false;
 	}
 
-	public List<?> list() {
-		return this.baseDao.query(this);
+    /**
+     * 是否允许分页
+     *   
+     * @param pageable 是否在语句中分页
+     */		
+	public void setPageable(boolean pageable) {
+		isPageable = pageable;
 	}
 
-	public long execute() {
-		return this.baseDao.execute(this);
-	}
-
-	public void setParameter(int position, Object value) {
-		
-	}
-	
+    /**
+     * 设置语句中的参数
+     *   如 select :name, :age from user where 1
+     *   
+     * @param name 参数名
+     * @param value 参数值
+     * @throws BuilderException 
+     */		
 	public void setParameter(String name, Object value) {
-		
+		ParameterBinding bind = new ParameterBinding();
+		bind.setName(name);
+		bind.setValue(value);
+		parameters.add(bind);
+		isNameParameter = true;
+	}
+
+    /**
+     * 设置语句中的参数
+     *   如 select ?, age from user where 1
+     *   
+     * @param index 第几个参数
+     * @param value 参数值
+     */		
+	public void setParameter(int position, Object value) {
+		ParameterBinding bind = new ParameterBinding();
+		bind.setPosition(position);
+		bind.setValue(value);
+		parameters.add(bind);
+		isPositionParameter = true;
+	}
+
+	public String getParameter(int position) {
+		if (position < parameters.size())
+			return parameters.get(position).toString();
+		return "?";
+	}
+
+	public String getParameter(String name) {
+		for (ParameterBinding bind : parameters) {
+			if (bind.getName().equals(name))
+				return bind.toString(); 
+		}
+		return "";
 	}
 	
-	public List<Expression> getExpressions() {
-		return expressions;
+    /**
+     * 获取参数替换到语句字符串
+     *   
+     * @param String  
+     */		
+	public String fillSqlString() {
+		StringBuilder str = new StringBuilder(sql.length());
+		int position = 0;
+		for(int i=0; i<sql.length(); i++) {
+			char c = sql.charAt(i);
+			if (c == '?') {				
+				str.append(getParameter(position++));
+			}
+			else if (c == ':') {
+				for(++i; i<sql.length(); i++)
+					if (sql.charAt(i) != ' ')
+						break;
+				position = i;
+				for(;i<sql.length();i++) {
+					c = sql.charAt(i);
+					if (c == ' ' || c == ',') {
+						String name = sql.substring(position, i--);						
+						str.append(getParameter(name));
+						break;
+					}
+				}
+			} else {
+				str.append(c);
+			}
+		}
+		return str.toString();
 	}
-
-	public void setExpressions(List<Expression> expressions) {
-		this.expressions = expressions;
-	}
-
+	
 	public Integer getLimit() {
 		return limit;
 	}
@@ -211,22 +429,6 @@ public class Builder {
 
 	public void setOffset(int offset) {
 		this.offset = offset;
-	}
-
-	public IBaseDao<?> getDao() {
-		return baseDao;
-	}
-
-	public void setDao(IBaseDao<?> dao) {
-		this.baseDao = dao;
-	}
-
-	public Class<?> getEntityClass() {
-		return entityClass;
-	}
-
-	public void setEntityClass(Class<?> entityClass) {
-		this.entityClass = entityClass;
 	}
 
 	public String getSql() {
@@ -245,71 +447,92 @@ public class Builder {
 		this.hql = hql;
 	}
 
-	private String toString(boolean pagable) {
+	public boolean isSelect() {
+		return (isUpdate || isDelete) ? false : true;
+	}
+	
+	/**
+	 * 将表达式转成sql语句
+	 * 
+	 * @return  返回sql语句
+	 */		
+	public String toString() {
 		String str = "";
-		if (expressions == null)
-			return str;
-
-		//Expression first = expressions.get(0);
-		//if (first != null && first.getOperator().startsWith("where")) {
-		if (isDefault) {
-			str = "select * from ";
-			if (entityClass != null) {
-				str += EntityUtils.getTableName(entityClass);
+		
+		// 如果直接设置sql带参数
+		if (sql != null || hql != null) {
+			if (isPositionParameter || isNameParameter) {
+				return fillSqlString();
 			}
+		}		
+		
+		// 如果查询没有select/from则添加
+		if (isSelect()) {
+			str += getSelectString();
+			str += getFromString();
+			str += getWhereString();
 		}
-
+		
+		// 遍历表达式转成字符串
+		if (expressions == null || expressions.size() < 1)
+			return str;		
 		for (Expression exp: expressions) {
-			if (pagable == false) {
+			// 如果不允许分页跳过limit/offset
+			if (isPageable == false) {
 				if (exp.getOperator().equals("limit") || exp.getOperator().equals("offset"))
 					continue;
 			}
 			String statment = exp.toString();
-			if (str.length() == 0 || statment.startsWith(" "))
+			if (statment.startsWith(" ") || statment.startsWith(","))
 				str += statment;
 			else
 				str += " " + statment;
 		}
+		
+		// 去掉最前面的空格
 		if (str.startsWith(" "))
 			str = str.trim();
 		return str;
 	}
-	
-	public String toString() {
+
+	/**
+	 * 转成不分页的SQL语句
+	 * @return  返回sql语句
+	 */	
+	public String toNoPageSql() {
+		isPageable = false;
 		return toString();
 	}
 
+	/**
+	 * 转成不分页的HQL语句
+	 * @return  返回sql语句
+	 */	
+	public String toNoPageHql() {
+		isPageable = false;
+		return toHql();
+	}
+	
+	/**
+	 * 转成SQL语句
+	 * @return  返回sql语句
+	 */	
 	public String toSql() {
-		return toString();
-	}
-
-	public String toSql(boolean pagable) {
-		return toString(pagable);
-	}
-	
-	public String toHql() {
 		return toString();
 	}
 
 	/**
 	 * 转成HQL语句
-	 * @param pagable 是否带分页
 	 * @return  返回hql语句
 	 */
-	public String toHql(boolean pagable) {
+	public String toHql() {
 		String str = "";
-		// 直接设置hql语句
-		if (getHql() != null) {
+		// 如果设置hql语句则返回
+		if (getHql() != null)
 			str = getHql();
-		}
-		// 通过拼接hql语句
-		else{
-			if (pagable) {
-				str = toString();
-			}else{
-				str = toString();
-			}
-		}
+		// 通过拼接返回hql语句
+		else
+			str = toString();
 		return str;
 	}
 	

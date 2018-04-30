@@ -22,13 +22,14 @@ public class Permission extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private String object;
-	private String operation;
+	private String name;
+	private Integer resourceId;
+	private Integer operationId;
 	private String description;
 	private String createBy;
-	private Date createDate;
+	private Date createTime;
 	private String updateBy;
-	private Date updateDate;
+	private Date updateTime;
 	private String deleted;
 
 	public Permission() {
@@ -41,7 +42,7 @@ public class Permission extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getId(){
 		return id;
 	}
@@ -50,25 +51,34 @@ public class Permission extends BaseEntity {
 		this.id = id;
 	}
     
-    @Column(name = "object", columnDefinition="varchar", nullable = true, length = 255)
-	public String getObject(){
-		return object;
+    @Column(name="name", columnDefinition="varchar", nullable = true, length = 50)
+	public String getName(){
+		return name;
 	}
 
-	public void setObject(String object){
-		this.object = object;
+	public void setName(String name){
+		this.name = name;
 	}
     
-    @Column(name = "operation", columnDefinition="varchar", nullable = true, length = 255)
-	public String getOperation(){
-		return operation;
+    @Column(name="resource_id", columnDefinition="int", nullable = true, length = 10)
+	public Integer getResourceId(){
+		return resourceId;
 	}
 
-	public void setOperation(String operation){
-		this.operation = operation;
+	public void setResourceId(Integer resourceId){
+		this.resourceId = resourceId;
 	}
     
-    @Column(name = "description", columnDefinition="varchar", nullable = true, length = 255)
+    @Column(name="operation_id", columnDefinition="int", nullable = true, length = 10)
+	public Integer getOperationId(){
+		return operationId;
+	}
+
+	public void setOperationId(Integer operationId){
+		this.operationId = operationId;
+	}
+    
+    @Column(name="description", columnDefinition="varchar", nullable = true, length = 255)
 	public String getDescription(){
 		return description;
 	}
@@ -77,7 +87,7 @@ public class Permission extends BaseEntity {
 		this.description = description;
 	}
     
-    @Column(name = "create_by", columnDefinition="varchar", nullable = true, length = 64)
+    @Column(name="create_by", columnDefinition="varchar", nullable = true, length = 50)
 	public String getCreateBy(){
 		return createBy;
 	}
@@ -86,16 +96,16 @@ public class Permission extends BaseEntity {
 		this.createBy = createBy;
 	}
     
-    @Column(name = "create_date", columnDefinition="datetime", nullable = true, length = 19)
-	public Date getCreateDate(){
-		return createDate;
+    @Column(name="create_time", columnDefinition="datetime", nullable = true, length = 19)
+	public Date getCreateTime(){
+		return createTime;
 	}
 
-	public void setCreateDate(Date createDate){
-		this.createDate = createDate;
+	public void setCreateTime(Date createTime){
+		this.createTime = createTime;
 	}
     
-    @Column(name = "update_by", columnDefinition="varchar", nullable = true, length = 64)
+    @Column(name="update_by", columnDefinition="varchar", nullable = true, length = 50)
 	public String getUpdateBy(){
 		return updateBy;
 	}
@@ -104,16 +114,16 @@ public class Permission extends BaseEntity {
 		this.updateBy = updateBy;
 	}
     
-    @Column(name = "update_date", columnDefinition="datetime", nullable = true, length = 19)
-	public Date getUpdateDate(){
-		return updateDate;
+    @Column(name="update_time", columnDefinition="datetime", nullable = true, length = 19)
+	public Date getUpdateTime(){
+		return updateTime;
 	}
 
-	public void setUpdateDate(Date updateDate){
-		this.updateDate = updateDate;
+	public void setUpdateTime(Date updateTime){
+		this.updateTime = updateTime;
 	}
     
-    @Column(name = "deleted", columnDefinition="char", nullable = true, length = 1)
+    @Column(name="deleted", columnDefinition="char", nullable = true, length = 1)
 	public String getDeleted(){
 		return deleted;
 	}

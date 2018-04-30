@@ -12,6 +12,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javassist.NotFoundException;
+
 public class ReflectUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
@@ -33,18 +35,19 @@ public class ReflectUtils {
 	 * @param object 对象
 	 * @param fieldName 对象属性名
 	 */
-	public static Object getFieldValue(final Object object, final String fieldName) {
+	public static Object getFieldValue(final Object object, final String fieldName) throws Exception {
 		Field field = getFieldByName(object, fieldName);
 		if (field == null)
 			throw new IllegalArgumentException("Could not find field [" + fieldName + "] on target [" + object + "]");		
 		makeAccessible(field);
-		Object value = null;
-		try {
-			value = field.get(object);
-		} catch (IllegalAccessException e) {
-			logger.error("Get the field of object error", e.getMessage());
-		}
-		return value;
+		return field.get(object);
+		
+		//try {
+		//	field.get(object);
+		//} catch (IllegalAccessException e) {
+		//	logger.error("Get the field of object error", e.getMessage());
+		//}
+		//return value;
 	}
 
 	/**

@@ -1,28 +1,36 @@
 package com.agile.framework.validate;
 
-import com.agile.framework.utils.EntityUtils;
-import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import com.agile.framework.controller.AbstractDaoController;
+import com.agile.framework.service.IDaoService;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 import java.lang.reflect.ParameterizedType;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 /*
  * 校验基础类
+ *   1. 获取实体类字段约束注解进行校验.
+ *   2. 很多时候实体类是代码生成器生成无法添加字段约束注解，那么提供自定义constrain函数设置约束. 
+ *   3. 另外一种解决方式是通过系统配置实体类字段校验 
+ *   
  * @author linweixuan@gmail.com
  * @date 2017-02-03
  * @version 1.0
  */
 public abstract class AbstractValidator<T> implements Validator {
 
-    protected Class<T> typeClass;
-    protected EntityAssist entityAssist;
-    protected javax.validation.Validator defaultValidator;
+	public static final Logger logger = LoggerFactory.getLogger(AbstractDaoController.class.getName()); 
+	
+    protected Class<T> typeClass = null;
+    protected EntityAssist entityAssist = null;
+    protected javax.validation.Validator defaultValidator = null;
 
     /**
      * 构造函数
@@ -30,7 +38,6 @@ public abstract class AbstractValidator<T> implements Validator {
     public AbstractValidator() {
         getEntityClass();
         getEntityAssist();
-        getDefaultValidator();
     }
 
     /**
@@ -48,6 +55,17 @@ public abstract class AbstractValidator<T> implements Validator {
     }
 
     /**
+     * 返回参数T的类注解助手
+     * @return the entity assist
+     */
+    public EntityAssist getEntityAssist() {
+        if (entityAssist == null) {
+            entityAssist = new EntityAssist(getEntityClass());
+        }
+        return entityAssist;
+    }
+
+    /**
      * 获取缺省的Validator
      *
      * @return Validator
@@ -60,42 +78,23 @@ public abstract class AbstractValidator<T> implements Validator {
         }
         return defaultValidator;
     }
-
+    
     /**
-     * 返回参数T的类注解助手
-     * @return the entity assist
-     */
-    public EntityAssist getEntityAssist() {
-        if (entityAssist == null) {
-            entityAssist = new EntityAssist(getEntityClass());
-        }
-        return entityAssist;
-    }
-
-    /**
-     * 实体对象校验
+     * 根据实体成员的注解进行对象校验
      *
-     * @request
-     * @return the entity
+     * @param target 
+     * @throws 抛出BindException异常
      *
      */
-    public void validateObject(Object target) throws Exception {
-        String objectName = target.getClass().getSimpleName();
-        BindingResult result = new BeanPropertyBindingResult(target, objectName);
-
+    public void validateObject(Object target, BindingResult result) {
         // 缺省校验处理
-        Set<?> violations = defaultValidator.validate(target);
+    	String objectName = target.getClass().getSimpleName();
+        Set<?> violations = getDefaultValidator().validate(target);
         for (Object item: violations) {
             ConstraintViolation<?> violation = (ConstraintViolation<?>)item;
-            String propertyPath = violation.getPropertyPath().toString();
-            String message = violation.getMessage();
+            String propertyPath = violation.getPropertyPath().toString(); //对象属性
+            String message = violation.getMessage(); //错误信息
             result.addError(new FieldError(objectName, propertyPath, message));
-        }
-
-        // 自定义校验处理
-        this.validate(target, result);
-        if (result.hasErrors()) {
-            throw new BindException(result);
         }
     }
 
@@ -106,29 +105,14 @@ public abstract class AbstractValidator<T> implements Validator {
      * @return the entity
      *
      */
-    public void validateEntity(T target) throws Exception {
-        validateObject(target);
-    }
-
-    /**
-     * 实体对象校验
-     *
-     * @request
-     * @return the entity
-     *
-     */
-    public void validateEntity(T target, BindingResult result) throws Exception {
-        // 自定义校验处理
-        this.validate(target, result);
-        if (result.hasErrors()) {
-            throw new BindException(result);
-        }
+    public void validate(Object target) throws BindException {
+        
     }
 
     /**
      * 设置实体类校验注解
      */
     public void constrain() {
-        //assist.setNotNull("name", "test");
+        //entityAssist.setNotNull("name", "不能为空");
     }
 }

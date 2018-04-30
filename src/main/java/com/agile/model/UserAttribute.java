@@ -23,8 +23,8 @@ public class UserAttribute extends BaseEntity {
 	private Integer id;
 	private Integer userId;
 	private String name;
-	private String value;
 	private Short type;
+	private String value;
 
 	public UserAttribute() {
 	
@@ -36,7 +36,7 @@ public class UserAttribute extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", columnDefinition="int", nullable = false, length = 10)
+    @Column(name="id", columnDefinition="int", nullable = false, length = 10)
 	public Integer getId(){
 		return id;
 	}
@@ -45,7 +45,7 @@ public class UserAttribute extends BaseEntity {
 		this.id = id;
 	}
     
-    @Column(name = "user_id", columnDefinition="int", nullable = true, length = 10)
+    @Column(name="user_id", columnDefinition="int", nullable = true, length = 10)
 	public Integer getUserId(){
 		return userId;
 	}
@@ -54,7 +54,7 @@ public class UserAttribute extends BaseEntity {
 		this.userId = userId;
 	}
     
-    @Column(name = "name", columnDefinition="varchar", nullable = true, length = 255)
+    @Column(name="name", columnDefinition="varchar", nullable = true, length = 255)
 	public String getName(){
 		return name;
 	}
@@ -63,21 +63,21 @@ public class UserAttribute extends BaseEntity {
 		this.name = name;
 	}
     
-    @Column(name = "value", columnDefinition="varchar", nullable = true, length = 255)
-	public String getValue(){
-		return value;
-	}
-
-	public void setValue(String value){
-		this.value = value;
-	}
-    
-    @Column(name = "type", columnDefinition="tinyint", nullable = true, length = 3)
+    @Column(name="type", columnDefinition="tinyint", nullable = true, length = 3)
 	public Short getType(){
 		return type;
 	}
 
 	public void setType(Short type){
 		this.type = type;
+	}
+    
+    @Column(name="value", columnDefinition="varchar", nullable = true, length = 255)
+	public String getValue(){
+		return value;
+	}
+
+	public void setValue(String value){
+		this.value = value;
 	}
 }

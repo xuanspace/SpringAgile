@@ -108,7 +108,7 @@ public class AuthController extends AbstractController {
         if (validate(session, user, result)) {
             return "redirect:/user/index";
         }
-        return "/user/login";
+        return "/auth/login";
     }
 
     /**

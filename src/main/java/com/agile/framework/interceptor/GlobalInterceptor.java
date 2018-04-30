@@ -23,7 +23,7 @@ import java.util.Map;
 
 /*
  * GlobalInterceptor全局拦截器
-
+ *
  * 配置文件添加拦截器
  * <mvc:interceptors>
  *	<bean class="com.agile.framework.interceptor.GlobalInterceptor" />

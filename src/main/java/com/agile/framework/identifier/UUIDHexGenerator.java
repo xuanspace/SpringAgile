@@ -5,8 +5,6 @@ import java.util.Properties;
 import java.util.UUID;
 
 /**
- * @author lee
- * 
  * 根据IP地址，JVM虚拟机，时间，同步序列号的情况下产生的相对唯一ID，可用于多线程，多服务器。
  * 32位 系统的 UUID 生成为36位
  */

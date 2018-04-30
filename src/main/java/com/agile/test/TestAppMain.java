@@ -1,9 +1,11 @@
 package com.agile.test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.agile.config.AppConfig;
 import com.agile.dao.interfaces.UserDao;
+import com.agile.model.User;
 import com.agile.service.interfaces.UserService;
 
 //
@@ -13,10 +15,10 @@ public class TestAppMain {
 
 	public static void main(String args[]) {
 		AbstractApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-
 		Object name = context.getBean("message");
 		
 		UserService service = (UserService) context.getBean("userService");
+		User u = service.get(16);
 		UserDao dao = context.getBean("userDao", UserDao.class);
 
 		/*
